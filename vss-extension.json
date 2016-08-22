@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "markdown-task",
     "name": "Markdown Build Tasks",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "publisher": "knom",
     "targets": [
         {
@@ -10,6 +10,7 @@
         }
     ],    
     "description": "Tools for using Markdown in your build and release pipelines.",
+	"public": true,
     "categories": [
         "Build and release"
     ],
