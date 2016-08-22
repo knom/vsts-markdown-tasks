@@ -13,6 +13,9 @@
     "categories": [
         "Build and release"
     ],
+	"tags":[
+		"Markdown", "HTML", "build", "task"
+	],
     "icons": {
         "default": "extension-icon.png"        
     },
@@ -21,6 +24,46 @@
             "path": "Markdown2Html"
         }
     ],
+	"screenshots": [
+        {
+            "path": "docs/addtask.png"
+        },
+        {
+            "path": "docs/markdown2html.png"
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "readme.md"
+        },
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+	"links": {
+        "home": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks"
+        },
+        "getstarted": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
+        },
+        "learn": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
+        },
+        "support": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks"
+        },
+        "issues": {
+            "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
+        }
+    },
+    "branding": {
+        "color": "rgb(99, 4, 107)",
+        "theme": "dark"
+    },
     "contributions": [
         {
             "id": "markdown-2-html",
