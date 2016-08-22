@@ -1,0 +1,36 @@
+{
+    "manifestVersion": 1,
+    "id": "markdown-task",
+    "name": "Markdown Build Tasks",
+    "version": "0.0.1",
+    "publisher": "knom",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "Tools for using Markdown in your build and release pipelines.",
+    "categories": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "extension-icon.png"        
+    },
+    "files": [
+        {
+            "path": "Markdown2Html"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "markdown-2-html",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Markdown2Html"
+            }
+        }
+    ]
+}
