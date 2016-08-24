@@ -1,11 +1,5 @@
-# VSTS Build/Release Tasks for Markdown #
-Useful VSTS tasks for the [Markdown](https://en.wikipedia.org/wiki/Markdown) language.
-
-## Tasks ##
-* Markdown To HTML
-
-    Transforms your Markdown file to HTML
-
+# Markdown 2 HTML VSTS Build/Release Task #
+Useful for converting [Markdown](https://en.wikipedia.org/wiki/Markdown) language into HTML.
 
 ## Usage ##
 The extension installs the follow tasks:
