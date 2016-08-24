@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1,
     "id": "markdown-task",
-    "name": "Markdown Build Tasks",
+    "name": "Markdown2Html Build Task",
     "version": "1.0.0",
     "publisher": "knom",
     "targets": [
@@ -9,7 +9,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Tools for using Markdown in your build and release pipelines.",
+    "description": "A task for converting Markdown to HTML in your build and release pipelines.",
 	"public": true,
     "categories": [
         "Build and release"
