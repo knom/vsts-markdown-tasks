@@ -1,80 +1,83 @@
 {
-    "manifestVersion": 1,
-    "id": "markdown-task",
-    "name": "Markdown2Html Build Task",
-    "version": "1.0.1",
-    "publisher": "knom",
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],    
-    "description": "A task for converting Markdown to HTML in your build and release pipelines.",
-	"public": true,
-    "categories": [
-        "Build and release"
-    ],
-	"tags":[
-		"Markdown", "HTML", "build", "task"
-	],
-    "icons": {
-        "default": "extension-icon.png"        
+  "manifestVersion": 1,
+  "id": "markdown-task",
+  "name": "Markdown2Html Build Task",
+  "version": "1.0.4",
+  "publisher": "knom",
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "description": "A task for converting Markdown to HTML in your build and release pipelines.",
+  "public": true,
+  "categories": [
+    "Build and release"
+  ],
+  "tags": [
+    "Markdown",
+    "HTML",
+    "build",
+    "task"
+  ],
+  "icons": {
+    "default": "extension-icon.png"
+  },
+  "files": [
+    {
+      "path": "Markdown2Html"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/addtask.png"
     },
-    "files": [
-        {
-            "path": "Markdown2Html"
-        }
-    ],
-	"screenshots": [
-        {
-            "path": "docs/addtask.png"
-        },
-        {
-            "path": "docs/markdown2html.png"
-        }
-    ],
-    "content": {
-        "details": {
-            "path": "readme.md"
-        },
-        "license": {
-            "path": "LICENSE"
-        }
+    {
+      "path": "docs/markdown2html.png"
+    }
+  ],
+  "content": {
+    "details": {
+      "path": "readme.md"
     },
-	"links": {
-        "home": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks"
-        },
-        "getstarted": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
-        },
-        "learn": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
-        },
-        "support": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
-        },
-        "repository": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks"
-        },
-        "issues": {
-            "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
-        }
+    "license": {
+      "path": "LICENSE"
+    }
+  },
+  "links": {
+    "home": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks"
     },
-    "branding": {
-        "color": "rgb(99, 4, 107)",
-        "theme": "dark"
+    "getstarted": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
     },
-    "contributions": [
-        {
-            "id": "markdown-2-html",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "Markdown2Html"
-            }
-        }
-    ]
+    "learn": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks/blob/master/README.md"
+    },
+    "support": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
+    },
+    "repository": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks"
+    },
+    "issues": {
+      "uri": "https://github.com/knom/vsts-markdown-tasks/issues"
+    }
+  },
+  "branding": {
+    "color": "rgb(99, 4, 107)",
+    "theme": "dark"
+  },
+  "contributions": [
+    {
+      "id": "markdown-2-html",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "Markdown2Html"
+      }
+    }
+  ]
 }

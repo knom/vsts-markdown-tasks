@@ -6,21 +6,65 @@
 // tfx extension create --manifest-globs .\vss-extension.json
 // Upload to https://marketplace.visualstudio.com/manage/
 
-
 // toolrunner help
 // https://github.com/Microsoft/vsts-task-lib/blob/be60205671545ebef47d3a40569519da9b4d34b0/node/docs/vsts-task-lib.md
+
+
+// tsc -w
+// $env:INPUT_ewsConnectedServiceName = 'EP1'
+// $env:ENDPOINT_URL_EP1 = 'https://mail.office365.com/'
+// $env:ENDPOINT_AUTH_EP1 = '{ "parameters": { "username": "Some user", "password": "Some password" }, "scheme": "Some scheme" }'
+// $env:ENDPOINT_DATA_EP1 = '{ "Key1": "Value1", "Key2", "Value2" }'
+// $env:INPUT_appManifestXmlPath="C:\...\a.xml"
 
 import tl = require('vsts-task-lib/task');
 import trm = require('vsts-task-lib/toolrunner');
 import path = require('path');
+import q = require('q');
 import fs = require('fs');
 import mdit = require('markdown-it');
 import lazyHeaders = require('markdown-it-lazy-headers');
+import dust = require('dustjs-linkedin');
 
-async function run() {
+function transformTemplate(templatePath : string, templateObject : any){
+	let deferred = q.defer();
+	
+	if (templatePath){
+		fs.readFile(templatePath, 'utf8', function (err:any, data : string) {			
+			if (err)
+			{
+				throw err;
+			}
+			
+			tl.debug("Applying HTML template...");
+			
+			dust.renderSource(data, templateObject, function(err: any, out : string) {												
+				tl.debug("Applying HTML template succeeded!");
+				
+				if (err)
+				{
+					throw err;
+				}
+				else{
+					deferred.resolve(out);
+				}
+			});
+		});
+	}			
+	else{
+		deferred.resolve(templateObject.body);
+	}
+	
+	return deferred.promise;
+}
+
+function run() {
     try {
 		let markdownPath = tl.getPathInput('markdownPath', true, true);
 		let htmlPath = tl.getPathInput('htmlPath', true);
+		let templatePath = tl.getPathInput('templatePath', false, true);
+		
+		let parameters = tl.getInput('parameters', false);
 		
 		tl.debug("Reading markdown file " + markdownPath +" (UTF-8)...");
 		fs.readFile(markdownPath, 'utf8', function (err, data) {
@@ -36,11 +80,26 @@ async function run() {
 			var result = md.render(data);
 			tl.debug("Rendering markdown to html succeeded!");
 
-			tl.debug("Writing HTML file " + htmlPath +"...");
-			tl.writeFile(htmlPath, result);
-			tl.debug("Writing HTML file " + htmlPath +" succeeded!");
+			let parametersObject = null;
 			
-			tl.setResult(tl.TaskResult.Succeeded, "Successfully transformed markdown file " + markdownPath + " to HTML file " + htmlPath);
+			if (!parameters)
+			{
+				parametersObject = { body: result };
+			}
+			else
+			{
+				parametersObject = JSON.parse(parameters);
+				console.log(parametersObject);
+				parametersObject.body = result;
+			}
+			
+			transformTemplate(templatePath, parametersObject).then(function(tresult : string){
+				tl.debug("Writing HTML file " + htmlPath +"...");
+				tl.writeFile(htmlPath, tresult);
+				tl.debug("Writing HTML file " + htmlPath +" succeeded!");
+				
+				tl.setResult(tl.TaskResult.Succeeded, "Successfully transformed markdown file " + markdownPath + " to HTML file " + htmlPath);
+			});
 		});
     }
     catch (err) {
@@ -50,40 +109,3 @@ async function run() {
 }
 
 run();
-// var path = require('path');
-// var tl = require('vso-task-lib');
-
-// // var echo = new tl.ToolRunner(tl.which('echo', true));
-
-// var markdownPath = tl.getInput('markdownPath', true);
-
-// var fs = require('fs');
-// fs.readFile(markdownPath, 'utf8', function (err, data) {
-	// if (err) {
-		// return console.log(err);
-	// }
-  
-	// var md = require('markdown-it')();
-	// var result = md.render(data);
-
-	// console.log(result);
-// });
-
-// // var msg = tl.getInput('msg', true);
-// // echo.arg(msg);
-
-// // var cwd = tl.getPathInput('cwd', false);
-
-// // will error and fail task if it doesn't exist
-// // tl.checkPath(cwd, 'cwd');
-// // tl.cd(cwd);
-
-// // echo.exec({ failOnStdErr: false})
-// // .then(function(code) {
-    // // tl.exit(code);
-// // })
-// // .fail(function(err) {
-    // // console.error(err.message);
-    // // tl.debug('taskRunner fail');
-    // // tl.exit(1);
-// // })
