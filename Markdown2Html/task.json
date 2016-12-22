@@ -14,7 +14,7 @@
   "version": {
     "Major": "1",
     "Minor": "0",
-    "Patch": "4"
+    "Patch": "5"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "Markdown2Html $(message)",
@@ -28,12 +28,20 @@
       "helpMarkDown": "Path to the markdown file (must be UTF-8)"
     },
 	{
-      "name": "htmlPath",
+      "name": "templatePath",
       "type": "filePath",
-      "label": "HTML output file path",
+      "label": "HTML template file path",
       "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Path to the output HTML file"
+      "required": false,
+      "helpMarkDown": "Path to the template HTML file. Use placeholder *{body|s}* for the markdown HTML as well as additional placeholders that you can pass in as parameters."
+    },
+	{
+      "name": "parameters",
+      "type": "string",
+      "label": "JSON Template parameters",
+      "defaultValue": "{}",
+      "required": false,
+      "helpMarkDown": "JSON object with additional parameters for the HTML template. Use the parameters as *{pName}* in the HTML template."
     },
 	{
       "name": "htmlPath",
