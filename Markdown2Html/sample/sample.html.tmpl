@@ -1,0 +1,128 @@
+<html>
+	<head>
+		<link href="https://cdn.vsassets.io/v/20161228T084049/_cssbundles/Default/vss-bundle-commoncss-vv2IbMlL4bWJXPccOoeeydq3WIftZjC0GZAqTlaojuao=" rel="stylesheet"></link>
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="item-details-control-root">
+		<div class="ux-item-details">
+			<div class="ux-section-banner" style="background-color: rgb(99, 4, 107);" data-bind="style: { 'background-color': brandingColor!=null ? brandingColor : '' }">
+                <div class="ux-section-core gallery-centered-content">
+                    <table>
+                        <tbody><tr>
+                            <td class="item-img" data-bind='template: { name: "image-template", data: imageViewModel }'>
+								<img style="top: 1px; visibility: visible;" alt="icon" src="https://knom.gallerycdn.vsassets.io/extensions/knom/markdown-task/1.0.6/1482417924031/Microsoft.VisualStudio.Services.Icons.Default" data-bind="attr: { src: imageSrc }, css: imageStyle, visible: imageVisible, event:{error: imageOnError, onload: centerImage($element) }">
+							</td>
+                            <td class="item-header">
+                                <div class="item-header-content dark" data-bind="css: brandingTheme">
+                                    <h1><span class="ux-item-name" data-bind="text: itemName">Markdown2Html Build Task</span></h1>
+                                    <span class="ux-item-preview" data-bind="if: previewString != null, text: previewString"></span>
+                                    <!-- ko if: $data.showGalleryItemEditLink --><!-- /ko -->
+                                    <!-- ko if: $data.galleryItemLink --><!-- /ko -->
+                                    <div class="ux-item-second-row-wrapper">
+                                        <!--ko if: $data.publisherLink -->
+                                        <div class="ux-item-publisher">
+                                            <h2><a class="ux-item-publisher-link item-banner-focussable-child-item" style="color: rgb(255, 255, 255);" href="/search?term=publisher%3A%22knom%22&amp;target=VSTS" data-bind="text: $data.publisherDisplayName, attr: { href: $data.publisherLink }, style: {color: brandingTheme == 'light' ? '#000000':'#ffffff'}">knom</a></h2>
+                                        </div>
+                                        <!-- /ko -->
+                                        <!--ko if: !$data.publisherLink --><!-- /ko -->
+                                        <!--ko if: showVerifiedPublisher --><!-- /ko -->
+                                        <!-- ko if: !showMinimalView -->
+                                        <!-- ko if: showDownloads -->
+                                        <span class="divider"> | </span>
+                                        <div class="ux-item-rating">
+                                            <div class="item-downloads-icon item-downloads-icon-dark" data-bind="css: highContrastInstallIcon()"></div>
+                                            <!-- ko if: clickLink === null ||  clickLink === undefined -->
+                                            <span data-bind="text: downloadsText">many installs</span>
+                                            <!-- /ko -->
+                                            <!-- ko if: clickLink !== null &&  clickLink !== undefined --><!-- /ko -->
+                                        </div>
+                                        <!-- /ko -->
+                                        <!-- ko if: showRatingReview && reviewResultsLoaded() -->
+                                        <a class="ux-item-review-rating-wrapper" href="#review-details">
+                                            <span title="Average rating: 0.0 (0 rating)" class="ux-item-review-rating" data-bind="attr: { title: ratingAndReviewDetailsData.averageRatingText }">
+                                                <span class="divider"> | </span>
+                                                <span class="ux-item-rating-control" data-bind="template: { name: 'rating-control-page-template', data: ratingAndReviewDetailsData.avgRatingDetailsOnBanner }">
+    <span class="rating-control">
+        <!-- ko foreach: new Array(fullStars()) --><!-- /ko -->
+
+        <!-- ko if: isReadOnly-->
+        <!-- ko foreach: new Array(halfStars()) --><!-- /ko -->
+        <!-- /ko -->
+
+        <!-- ko foreach: new Array(emptyStars()) -->
+        <img class="star full-star" alt="" src="https://cdn.vsassets.io/v/20161228T084049/_content/FullStar.svg" data-bind="event: {click: $parent.isReadOnly ? null : function(data, event) {$parent.onClickRatingEmptyStars($index()+1)},&#10;                                                        mouseover: $parent.isReadOnly ? null : function(data, event) {$parent.mouseOverRatingEmptyStars($index()+1)},&#10;                                                        keypress: function(data, event) {return $parent.onKeyDown({index: $index() + 1, isEmptyStar: true}, event) }},&#10;                                                        attr: {tabindex: $parent.isReadOnly? null : 0, src: $parent.emptyStarPath}">
+        
+        <img class="star full-star" alt="" src="https://cdn.vsassets.io/v/20161228T084049/_content/FullStar.svg" data-bind="event: {click: $parent.isReadOnly ? null : function(data, event) {$parent.onClickRatingEmptyStars($index()+1)},&#10;                                                        mouseover: $parent.isReadOnly ? null : function(data, event) {$parent.mouseOverRatingEmptyStars($index()+1)},&#10;                                                        keypress: function(data, event) {return $parent.onKeyDown({index: $index() + 1, isEmptyStar: true}, event) }},&#10;                                                        attr: {tabindex: $parent.isReadOnly? null : 0, src: $parent.emptyStarPath}">
+        
+        <img class="star full-star" alt="" src="https://cdn.vsassets.io/v/20161228T084049/_content/FullStar.svg" data-bind="event: {click: $parent.isReadOnly ? null : function(data, event) {$parent.onClickRatingEmptyStars($index()+1)},&#10;                                                        mouseover: $parent.isReadOnly ? null : function(data, event) {$parent.mouseOverRatingEmptyStars($index()+1)},&#10;                                                        keypress: function(data, event) {return $parent.onKeyDown({index: $index() + 1, isEmptyStar: true}, event) }},&#10;                                                        attr: {tabindex: $parent.isReadOnly? null : 0, src: $parent.emptyStarPath}">
+        
+        <img class="star full-star" alt="" src="https://cdn.vsassets.io/v/20161228T084049/_content/FullStar.svg" data-bind="event: {click: $parent.isReadOnly ? null : function(data, event) {$parent.onClickRatingEmptyStars($index()+1)},&#10;                                                        mouseover: $parent.isReadOnly ? null : function(data, event) {$parent.mouseOverRatingEmptyStars($index()+1)},&#10;                                                        keypress: function(data, event) {return $parent.onKeyDown({index: $index() + 1, isEmptyStar: true}, event) }},&#10;                                                        attr: {tabindex: $parent.isReadOnly? null : 0, src: $parent.emptyStarPath}">
+        
+        <img class="star full-star" alt="" src="https://cdn.vsassets.io/v/20161228T084049/_content/FullStar.svg" data-bind="event: {click: $parent.isReadOnly ? null : function(data, event) {$parent.onClickRatingEmptyStars($index()+1)},&#10;                                                        mouseover: $parent.isReadOnly ? null : function(data, event) {$parent.mouseOverRatingEmptyStars($index()+1)},&#10;                                                        keypress: function(data, event) {return $parent.onKeyDown({index: $index() + 1, isEmptyStar: true}, event) }},&#10;                                                        attr: {tabindex: $parent.isReadOnly? null : 0, src: $parent.emptyStarPath}">
+        <!-- /ko -->
+    </span>
+
+</span>
+                                                <span class="ux-item-rating-count"> (<span data-bind="{text: ratingAndReviewDetailsData.totalReviewCount}">All</span>) </span>
+                                            </span>
+                                        </a>
+                                        <!-- /ko -->
+                                        <div class="ux-vsippartner" style="display: none;" data-bind="visible: isVSIPPartner">
+                                            <span class="divider"> | </span>
+                                            <img class="ux-item-vsippartner">
+                                        </div>
+                                        <!-- /ko -->
+                                    </div>
+                                    <div class="ux-item-shortdesc" data-bind="text: itemDescription">A task for converting Markdown to HTML in your build and release pipelines.</div>
+                                    <!-- ko if: !isUnpublished -->
+                                    <div class="ux-item-action">
+                                        <!-- ko if: !isVSCode && !isVSExtension-->
+                                        <!-- ko if: !showMinimalView -->
+                                        <!-- ko if: trialButtonVisible --><!-- /ko-->
+                                        <a tabindex="-1" title="" class="install-button-container" href="https://marketplace.visualstudio.com/items?itemName=knom.markdown-task&amp;workflowId=marketplace&amp;wt.mc_id=o~msft~marketplace~install&amp;install=true" target="_self" rel="noreferrer noopener" data-bind="attr: { 'data-toggle': _isInstallLinkModalType(actionLink) ? 'modal' : null, href: actionLink, target: actionLinkNewTab ? '_blank' : '_self',rel: 'noreferrer noopener', title: actionButtonTitle }, visible: actionButtonVisible">
+                                            <button class="ux-button install" data-bind="text: actionButtonText, css: {buttonDisabled: actionButtonDisabled, showDropdown: installForPaidUsersSupported}, click: function(data, event) {return $data.onClick(event);}, disable: actionButtonDisabled">Install</button>
+                                        </a>
+                                        <!-- ko if: installForPaidUsersSupported --><!-- /ko-->
+                                        <!-- /ko -->
+                                        <div tabindex="-1" class="modal fade install-page" id="install-pop-up" role="dialog" data-keyboard="false" data-backdrop="static">
+                                            <div class="install-page-content gallery-centered-content">
+                                                <div class="item-banner-container">
+                                                    <div class="install-page-item-banner"></div>
+                                                </div>
+                                                <div class="acquire-item-workflow-container"></div>
+                                            </div>
+                                        </div>
+                                        <!-- ko if : showOfferPlans --><!-- /ko -->
+                                        <!-- /ko -->
+                                        <!-- ko if: downloadLink !== null &&  downloadLink !== undefined -->
+                                        <!-- ko if: !showMinimalView -->
+                                        <a tabindex="-1" class="download-button-container" href="https://app.vssps.visualstudio.com/_signin?realm=marketplace.visualstudio.com&amp;redirect=1&amp;context=eyJodCI6MywiaGlkIjoiMjY2M2IxM2YtNTBlMy1hNjU1LWExNTktMjJmNmY0NzI1ZmFiIiwicXMiOnt9LCJyciI6IiIsInZoIjoiIiwiY3YiOiIiLCJjcyI6IiJ90&amp;reply_to=https%3A%2F%2Fmarketplace.visualstudio.com%2Fitems%3FitemName%3Dknom.markdown-task%26download%3Dtrue#ctx%3DeyJTaWduSW5Db29raWVEb21haW5zIjpbImh0dHBzOi8vbG9naW4ud2luZG93cy5uZXQiLCJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20iXX01" data-bind="attr: { 'data-toggle': _isDownloadLinkModalType(downloadLink) ? 'modal' : null, href: downloadLink }, click: startDownload">
+                                            <button class="ux-button install" data-bind="text: downloadButtonText">Download</button>
+                                        </a>
+                                        <div tabindex="-1" class="modal fade" id="download-pop-up" role="dialog" data-bind="if: itemDownloadViewModel, css: {'show-on-load': initiateDownloadonPageLoad}"></div>
+                                        <!-- /ko -->
+                                        <!-- /ko -->
+                                        <!-- ko if: clickLink !== null &&  clickLink !== undefined --><!-- /ko -->
+                                        <!-- ko if: isVSCode --><!-- /ko -->
+                                        <span style="display: none;" data-bind="text: offersCost, visible: offersCost != null"></span>
+                                    </div>
+                                    <!--  /ko -->
+                                    <div class="ux-item-free-install" data-bind="visible: !isUnpublished &amp;&amp; actionDescriptionHtml != null, html: actionDescriptionHtml">Click <strong>Install</strong> for Team Services and <strong>Download</strong> for Team Foundation Server.</div>
+                                    <div class="ux-item-offers-cost-text" style="display: none;" data-bind="visible: offersCostText != null, html: offersCostText"></div>
+                                    <div class="ux-item-unpublished-text" style="display: none;" data-bind="visible: unpublishedText != null">
+                                        <span class="ux-item-unpublished-status-icon bowtie-icon bowtie-status-info"></span>
+                                        <span data-bind="text: unpublishedText"></span>
+                                    </div>
+                                    <!-- /ko -->
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
+            </div>
+			<div class ="gallery-centered-content markdown">{body|s}</div>
+		</div>
+		</div>
+	</body>
+</html>
