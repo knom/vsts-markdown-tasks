@@ -1,6 +1,6 @@
 {
   "name": "markdown2html",
-  "version": "1.0.9",
+  "version": "2.0.0",
   "description": "Markdown to HTML VSTS build task",
   "main": "markdown2html.js",
   "scripts": {},
