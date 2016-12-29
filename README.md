@@ -15,6 +15,25 @@ The extension installs the follow tasks:
     * Markdown file path: 
         * The path of the input Markdown file. 
         * It can contain variables such as $(Build.ArtifactStagingDirectory)
+    * HTML template file path: 
+        * The path of the HTML file used as a template. 
+        * The placeholder for the inserted converted Ex-Markdown is 
+                
+                {body|s}
+          Put it wherever you want the converted Markdown to show up in the template.
+
+        * Other custom placeholders for parameters can be used such as
+
+                {title}
+                {author}
+          These parameters need to be passed in as JSON.
+
+    * JSON Template Parameters: 
+        * The parameters to be used instead of placeholders in the template file.
+        * **body** is automatically filled 
+        * The parameters are case-sensitive
+
+                {"title": "Release Notes", "Author": "knom"}
     * HTML output file path:
         * The path of the output HTML file. If the file does not exist, it will be created. 
         * If the file exists, it will be overwritten.
