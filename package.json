@@ -1,0 +1,18 @@
+{
+  "name": "central",
+  "version": "1.0.0",
+  "description": "Central package file",
+  "scripts": {},
+  "author": "knom",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-bump": "^2.5.1",
+    "gulp-exec": "^2.1.3",
+    "gulp-json-editor": "^2.2.1",
+    "gulp-typescript": "^3.1.3",
+    "merge-stream": "^1.0.1",
+    "typescript": "^2.1.4",
+    "yargs": "^6.5.0"
+  }
+}
