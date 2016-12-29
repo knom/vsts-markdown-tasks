@@ -25,6 +25,7 @@ import fs = require('fs');
 import mdit = require('markdown-it');
 import lazyHeaders = require('markdown-it-lazy-headers');
 import dust = require('dustjs-linkedin');
+import util = require('util');
 
 function transformTemplate(templatePath : string, templateObject : any){
 	let deferred = q.defer();
@@ -36,8 +37,8 @@ function transformTemplate(templatePath : string, templateObject : any){
 				throw err;
 			}
 			
-			tl.debug("Applying HTML template...");
-			
+			tl.debug(util.format("Applying HTML template using parameters %j...", JSON.stringify(templateObject)));
+
 			dust.renderSource(data, templateObject, function(err: any, out : string) {												
 				tl.debug("Applying HTML template succeeded!");
 				
@@ -89,7 +90,6 @@ function run() {
 			else
 			{
 				parametersObject = JSON.parse(parameters);
-				console.log(parametersObject);
 				parametersObject.body = result;
 			}
 			
