@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Program",
+            "program": "${workspaceRoot}\\markdown2html.js",
+            "cwd": "${workspaceRoot}",
+            "outFiles": [],
+            "sourceMaps": true,
+            "env": {
+                "NODE_ENV": "development",
+                "INPUT_markdownPath" : "../Readme.md",
+                "INPUT_htmlPath" : "sample/sample.html",
+                "INPUT_templatePath" : "sample/sample.html.tmpl",
+                "INPUT_parameters" : "{\"title\":\"Sample Title\"}"
+            }
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Process",
+            "port": 5858,
+            "outFiles": [],
+            "sourceMaps": true
+        }
+    ]
+}
