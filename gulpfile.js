@@ -94,3 +94,16 @@ gulp.task('package', function (cb) {
 	
 	
 });
+
+gulp.task('packageOneTime', function (cb) {
+    gulp.src(['./markdown2html/markdown2html.js', 
+                './markdown2html/package.json', 
+                './markdown2html/task.json', 
+                './markdown2html/icon.png'])
+        .pipe(gulp.dest('./out'))
+		.on('end', function(){
+			console.log("Renaming folders..");
+			fs.removeSync("./markdown2html");
+			fs.renameSync("./out","markdown2html");
+		});	
+});
