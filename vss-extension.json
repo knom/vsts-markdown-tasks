@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "markdown-task",
   "name": "Markdown2Html Build Task",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "publisher": "knom",
   "targets": [
     {
