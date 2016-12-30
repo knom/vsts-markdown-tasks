@@ -1,5 +1,6 @@
 *.js.map
 *.vsix
+markdown2html.js
 
 # Logs
 logs
