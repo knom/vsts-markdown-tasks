@@ -1,18 +1,36 @@
 "use strict";
 var gulp = require("gulp");
+var del = require("del");
 var typescript = require("gulp-typescript");
 var bump = require("gulp-bump");
 var exec = require('child_process').exec;
 var merge = require('merge-stream');
 var semver = require('semver');
 var fs = require('fs-extra');
+var path = require('path')
 var jeditor = require("gulp-json-editor");
-
 var args = require("yargs");
 
-gulp.task('default', ['package']);
+gulp.task('default', ['build']);
 
-gulp.task('versionAdd', function () {
+gulp.task('build', ['build:markdown2html']);
+
+gulp.task('build:markdown2html', function () {
+    var tsProject = typescript.createProject('./markdown2html/tsconfig.json');
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest(function(file) {
+			return file.base;
+		}));
+});
+
+gulp.task('watch', ['watch:markdown2html']);
+
+gulp.task('watch:markdown2html', ['build:markdown2html'], function () {
+    gulp.watch('./markdown2html/**/*.ts', ['build:markdown2html']);
+});
+
+gulp.task('addVersion', function () {
     var pkg = JSON.parse(fs.readFileSync('./vss-extension.json', 'utf8'));
     var oldVersion = pkg.version;
 
@@ -29,6 +47,8 @@ gulp.task('versionAdd', function () {
     var newVersion = semver.inc(oldVersion, type);
     options.version = newVersion;
 
+    console.log("New Version is: " + newVersion);
+
     var bump1 = gulp
         .src(['./markdown2html/task.json'])
         .pipe(jeditor(function(json){
@@ -44,7 +64,7 @@ gulp.task('versionAdd', function () {
 		}));
 
     var bump2 = gulp
-        .src(['./markdown2html/package.json'])
+        .src(['./package.json'])
         .pipe(bump(options))
         .pipe(gulp.dest(function(file) {
 			return file.base;
@@ -60,50 +80,20 @@ gulp.task('versionAdd', function () {
     return merge(bump1, bump2, bump3);
 });
 
-gulp.task('package', function (cb) {
-    gulp.src(['./markdown2html/markdown2html.js', 
-                './markdown2html/package.json', 
-                './markdown2html/task.json', 
-                './markdown2html/icon.png'])
-        .pipe(gulp.dest('./out'))
-		.on('end', function(){
-			console.log("Renaming folders..");
-			fs.renameSync("./markdown2html","markdown2html.old");
-			fs.renameSync("./out","markdown2html");
-				
-			console.log("Running npm install --only=production");
-			exec('npm install --only=production', { cwd: "./markdown2html"}, function (err, stdout, stderr) {
-				console.log(stdout);
-				console.log(stderr);
-				
-				if (err)
-					cb(err);
-				
-				exec('tfx extension create --manifest-globs ./vss-extension.json', function (err, stdout, stderr) {
-					console.log(stdout);
-					console.log(stderr);
-										
-					console.log("Renaming folders back..");			
-					
-					fs.removeSync("./markdown2html/");
-					fs.renameSync("./markdown2html.old","./markdown2html");
-					cb(err);
-				});
-			});
-		});
-	
-	
+gulp.task('package:clean', function () {
+    return del(['package/*/**']);
 });
 
-gulp.task('packageOneTime', function (cb) {
-    gulp.src(['./markdown2html/markdown2html.js', 
-                './markdown2html/package.json', 
-                './markdown2html/task.json', 
-                './markdown2html/icon.png'])
-        .pipe(gulp.dest('./out'))
-		.on('end', function(){
-			console.log("Renaming folders..");
-			fs.removeSync("./markdown2html");
-			fs.renameSync("./out","markdown2html");
-		});	
+gulp.task('package', ['package:copy'], function () {	
+});
+
+gulp.task('package:copy', ['package:clean'], function () {
+    var main = gulp.src([
+                './extension-icon*.png', 'LICENSE', 'README.md', 'vss-extension.json', 'package.json', 
+                'docs/**/*', 
+                './markdown2html/markdown2html.js', './markdown2html/package.json', './markdown2html/task.json', './markdown2html/icon.png'],
+                 {base: "."})
+        .pipe(gulp.dest("./package"));
+
+    return merge(main);	
 });

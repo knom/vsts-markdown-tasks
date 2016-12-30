@@ -8,6 +8,6 @@
     },
     "files": [
 		"markdown2html.ts",
-		"./typings/index.d.ts"
+		"../typings/index.d.ts"
     ]
 }
