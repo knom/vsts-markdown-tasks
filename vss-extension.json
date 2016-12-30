@@ -26,6 +26,9 @@
   "files": [
     {
       "path": "Markdown2Html"
+    },
+    {
+      "path": "node_modules"
     }
   ],
   "screenshots": [
