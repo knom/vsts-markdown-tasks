@@ -19,7 +19,6 @@
 
 import tl = require('vsts-task-lib/task');
 import trm = require('vsts-task-lib/toolrunner');
-import path = require('path');
 import q = require('q');
 import fs = require('fs');
 import mdit = require('markdown-it');
@@ -27,85 +26,98 @@ import lazyHeaders = require('markdown-it-lazy-headers');
 import dust = require('dustjs-linkedin');
 import util = require('util');
 
-function transformTemplate(templatePath : string, templateObject : any){
+function transformTemplate(templatePath: string, templateObject: any) {
 	let deferred = q.defer();
-	
-	if (templatePath){
-		fs.readFile(templatePath, 'utf8', function (err:any, data : string) {			
-			if (err)
-			{
+
+	if (templatePath) {
+		fs.readFile(templatePath, 'utf8', function (err: any, data: string) {
+			if (err) {
 				throw err;
 			}
-			
+
 			tl.debug(util.format("Applying HTML template using parameters %j...", JSON.stringify(templateObject)));
 
-			dust.renderSource(data, templateObject, function(err: any, out : string) {												
+			dust.renderSource(data, templateObject, function (err: any, out: string) {
 				tl.debug("Applying HTML template succeeded!");
-				
-				if (err)
-				{
+
+				if (err) {
 					throw err;
 				}
-				else{
+				else {
 					deferred.resolve(out);
 				}
 			});
 		});
-	}			
-	else{
+	}
+	else {
 		deferred.resolve(templateObject.body);
 	}
-	
+
 	return deferred.promise;
 }
 
+function throwIfDirectory(parameter: string, path: string) {
+	if (!path)
+	{
+		return;
+	}
+
+	if (fs.lstatSync(path).isDirectory()) {
+		let message = util.format("Parameter '%s=%s' should be a file but is a directory!", parameter, path);
+
+		throw { message: message };
+	}
+}
+
 function run() {
-    try {
+	try {
 		let markdownPath = tl.getPathInput('markdownPath', true, true);
 		let htmlPath = tl.getPathInput('htmlPath', true);
 		let templatePath = tl.getPathInput('templatePath', false, true);
-		
+
 		let parameters = tl.getInput('parameters', false);
-		
-		tl.debug("Reading markdown file " + markdownPath +" (UTF-8)...");
+
+		throwIfDirectory("markdownPath", markdownPath);
+		throwIfDirectory("htmlPath", htmlPath);
+		throwIfDirectory("templatePath", templatePath);
+
+		tl.debug("Reading markdown file " + markdownPath + " (UTF-8)...");
 		fs.readFile(markdownPath, 'utf8', function (err, data) {
 			if (err) {
 				throw err;
 			}
-			
+
 			tl.debug("Reading file " + markdownPath + " succeeded!");
-	  
+
 			var md = mdit().use(lazyHeaders);
-			
+
 			tl.debug("Rendering markdown to html...");
 			var result = md.render(data);
 			tl.debug("Rendering markdown to html succeeded!");
 
 			let parametersObject = null;
-			
-			if (!parameters)
-			{
+
+			if (!parameters) {
 				parametersObject = { body: result };
 			}
-			else
-			{
+			else {
 				parametersObject = JSON.parse(parameters);
 				parametersObject.body = result;
 			}
-			
-			transformTemplate(templatePath, parametersObject).then(function(tresult : string){
-				tl.debug("Writing HTML file " + htmlPath +"...");
-				tl.writeFile(htmlPath, tresult);
-				tl.debug("Writing HTML file " + htmlPath +" succeeded!");
-				
+
+			transformTemplate(templatePath, parametersObject).then(function (tresult: string) {
+				tl.debug("Writing HTML file " + htmlPath + "...");
+				fs.writeFileSync(htmlPath, tresult);
+				tl.debug("Writing HTML file " + htmlPath + " succeeded!");
+
 				tl.setResult(tl.TaskResult.Succeeded, "Successfully transformed markdown file " + markdownPath + " to HTML file " + htmlPath);
 			});
 		});
-    }
-    catch (err) {
-        // handle failures in one place
-        tl.setResult(tl.TaskResult.Failed, err.message);
-    }
+	}
+	catch (err) {
+		// handle failures in one place
+		tl.setResult(tl.TaskResult.Failed, err.message);
+	}
 }
 
 run();
