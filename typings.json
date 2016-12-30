@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "q": "registry:dt/q#0.0.0+20161119044246",
-	"dustjs-linkedin": "registry:dt/dustjs-linkedin#1.2.1+20160915014424",
-	"markdown-it": "registry:dt/markdown-it#0.0.0+20161130125836"
+    "dustjs-linkedin": "registry:dt/dustjs-linkedin#1.2.1+20160915014424",
+    "markdown-it": "registry:dt/markdown-it#0.0.0+20161130125836"
   }
 }
