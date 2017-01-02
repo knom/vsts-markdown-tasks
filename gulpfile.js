@@ -12,6 +12,7 @@ var jeditor = require("gulp-json-editor");
 var args = require("yargs");
 var glob = require('glob')
 
+
 gulp.task('default', ['build']);
 
 gulp.task('clean', function (cb) {
