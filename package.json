@@ -19,6 +19,7 @@
     "yargs": "^6.5.0"
   },
   "scripts": {
-    "prepublish": "typings install && cd markdown2html && npm install"
+	"prepublish": "typings install",
+    "postinstall": "cd markdown2html && npm install"
   }
 }
