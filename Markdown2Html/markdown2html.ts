@@ -61,6 +61,11 @@ function throwIfDirectory(parameter: string, path: string) {
 	{
 		return;
 	}
+	
+	if (!fs.existsSync(path))
+	{
+		return;
+	}
 
 	if (fs.lstatSync(path).isDirectory()) {
 		let message = util.format("Parameter '%s=%s' should be a file but is a directory!", parameter, path);
