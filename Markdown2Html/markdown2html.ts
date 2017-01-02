@@ -76,7 +76,7 @@ function throwIfDirectory(parameter: string, path: string) {
 
 function run() {
 	try {
-		let sourcesPath = tl.getVariable("Build.SourcesDirectory");
+		let sourcesPath = tl.getVariable("System.DefaultWorkingDirectory");
 
 		let markdownPath = tl.getPathInput('markdownPath', true, true);
 		let htmlPath = tl.getPathInput('htmlPath', true);
