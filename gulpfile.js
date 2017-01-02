@@ -10,8 +10,19 @@ var fs = require('fs-extra');
 var path = require('path')
 var jeditor = require("gulp-json-editor");
 var args = require("yargs");
+var glob = require('glob')
 
 gulp.task('default', ['build']);
+
+gulp.task('clean', function (cb) {
+    return glob('./**/*.ts', function (err, files) {
+		var generatedFiles = files.map(function (file) {
+		  return file.replace(/.ts$/, '.js*');
+		});
+
+		del(generatedFiles, cb);
+	});
+});
 
 gulp.task('build', ['build:markdown2html']);
 
