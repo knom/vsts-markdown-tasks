@@ -76,9 +76,15 @@ function throwIfDirectory(parameter: string, path: string) {
 
 function run() {
 	try {
+		let sourcesPath = tl.getVariable("Build.SourcesDirectory");
+
 		let markdownPath = tl.getPathInput('markdownPath', true, true);
 		let htmlPath = tl.getPathInput('htmlPath', true);
+		
 		let templatePath = tl.getPathInput('templatePath', false, true);
+		
+		if (templatePath === sourcesPath)
+			templatePath = null;
 
 		let parameters = tl.getInput('parameters', false);
 
@@ -106,7 +112,13 @@ function run() {
 				parametersObject = { body: result };
 			}
 			else {
-				parametersObject = JSON.parse(parameters);
+				try{
+					parametersObject = JSON.parse(parameters);
+				}
+				catch (ex) {
+					tl.setResult(tl.TaskResult.Failed, util.format("Parameter \"Paramaters\" contains illegal JSON \"%s\"", parameters));
+					return;
+				}
 				parametersObject.body = result;
 			}
 
