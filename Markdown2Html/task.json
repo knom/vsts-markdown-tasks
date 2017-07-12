@@ -20,7 +20,7 @@
     "Minor": "0",
     "Patch": "2"
   },
-  "minimumAgentVersion": "2.105.7",
+  "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "Markdown2Html $(message)",
   "inputs": [{
     "name": "markdownPath",
