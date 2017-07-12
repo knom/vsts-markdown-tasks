@@ -1,6 +1,10 @@
 # Markdown 2 HTML VSTS Build/Release Task #
 Useful for converting [Markdown](https://en.wikipedia.org/wiki/Markdown) language into HTML.
 
+## Supported Platforms ##
+* Visual Studio Team Services
+* Team Foundation Server 2015 Update 3 and higher ([How to install extensions in TFS](https://www.visualstudio.com/en-us/docs/marketplace/get-tfs-extensions))
+
 ## Usage ##
 The extension installs the follow tasks:
 
