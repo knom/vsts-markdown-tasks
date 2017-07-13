@@ -1,4 +1,4 @@
-# Markdown 2 HTML VSTS Build/Release Task #
+# Markdown 2 HTML VSTS Build/Release Task ![Build Status](https://knom.visualstudio.com/_apis/public/build/definitions/969cb309-5d7f-427d-b48a-43eeac3c4aaf/20/badge)
 Useful for converting [Markdown](https://en.wikipedia.org/wiki/Markdown) language into HTML.
 
 ## Supported Platforms ##
