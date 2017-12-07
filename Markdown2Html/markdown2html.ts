@@ -25,6 +25,7 @@ import mdit = require('markdown-it');
 import lazyHeaders = require('markdown-it-lazy-headers');
 import dust = require('dustjs-linkedin');
 import util = require('util');
+import mditAnchor = require ('markdown-it-anchor');
 
 function transformTemplate(templatePath: string, templateObject: any) {
 	let deferred = q.defer();
@@ -100,7 +101,12 @@ function run() {
 
 			tl.debug("Reading file " + markdownPath + " succeeded!");
 
-			var md = mdit().use(lazyHeaders);
+			var md = mdit();
+			md.use(lazyHeaders);
+			md.use(mditAnchor,{
+				level: 1,
+				permalink: false
+			})
 
 			tl.debug("Rendering markdown to html...");
 			var result = md.render(data);
