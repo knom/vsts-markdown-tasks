@@ -25,7 +25,7 @@ import mdit = require('markdown-it');
 import lazyHeaders = require('markdown-it-lazy-headers');
 import dust = require('dustjs-linkedin');
 import util = require('util');
-import mditAnchor = require ('markdown-it-anchor');
+import mditAnchor = require('markdown-it-anchor');
 
 function transformTemplate(templatePath: string, templateObject: any) {
 	let deferred = q.defer();
@@ -58,13 +58,11 @@ function transformTemplate(templatePath: string, templateObject: any) {
 }
 
 function throwIfDirectory(parameter: string, path: string) {
-	if (!path)
-	{
+	if (!path) {
 		return;
 	}
-	
-	if (!fs.existsSync(path))
-	{
+
+	if (!fs.existsSync(path)) {
 		return;
 	}
 
@@ -81,9 +79,9 @@ function run() {
 
 		let markdownPath = tl.getPathInput('markdownPath', true, true);
 		let htmlPath = tl.getPathInput('htmlPath', true);
-		
+
 		let templatePath = tl.getPathInput('templatePath', false, true);
-		
+
 		if (templatePath === sourcesPath)
 			templatePath = null;
 
@@ -103,7 +101,7 @@ function run() {
 
 			var md = mdit();
 			md.use(lazyHeaders);
-			md.use(mditAnchor,{
+			md.use(mditAnchor, {
 				level: 1,
 				permalink: false
 			})
@@ -118,7 +116,7 @@ function run() {
 				parametersObject = { body: result };
 			}
 			else {
-				try{
+				try {
 					parametersObject = JSON.parse(parameters);
 				}
 				catch (ex) {

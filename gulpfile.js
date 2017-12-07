@@ -1,111 +1,159 @@
-"use strict";
-var gulp = require("gulp");
-var del = require("del");
+'use strict';
+
+var fs = require('fs');
+var path = require('path');
+var del = require('del');
+var tslint = require('gulp-tslint');
+var gulp = require('gulp');
+// var istanbul = require('gulp-istanbul');
+// var mocha = require('gulp-mocha');
+var plumber = require('gulp-plumber');
+var shell = require('shelljs');
+var spawn = require('child_process').spawn;
+var gutil = require('gulp-util');
 var typescript = require("gulp-typescript");
-var bump = require("gulp-bump");
-var exec = require('child_process').exec;
-var merge = require('merge-stream');
-var semver = require('semver');
-var fs = require('fs-extra');
-var path = require('path')
-var jeditor = require("gulp-json-editor");
-var args = require("yargs");
-var glob = require('glob')
 
+var copyNodeModulesToTasks = function (done) {
+    fs.readdirSync('src').forEach(function (file) {
+        var filePath = path.join('dist', 'src', file);
+        if (fs.statSync(filePath).isDirectory()) {
+            try {
+                if (fs.statSync(path.join(filePath, 'task.json')).isFile()) {
+                    shell.cp('-rf', 'dist/node_modules', filePath);
+                }
+            } catch (e) {
+                /* swallow error: not a task directory */
+            }
+        }
+    });
+    done();
+};
 
-gulp.task('default', ['build']);
+var executeCommand = function (cmd, dir, done) {
+    gutil.log('Running command: ' + cmd);
+    var pwd = shell.pwd();
+    if (undefined !== dir) {
+        gutil.log(' Working directory: ' + dir);
+        shell.cd(dir);
+    }
+    shell.exec(cmd, {
+        silent: true
+    }, function (code, stdout, stderr) {
+        gutil.log(' stdout: ' + stdout);
+        if (code !== 0) {
+            gutil.log('Command failed: ' + cmd + '\nManually execute to debug');
+            gutil.log(' stderr: ' + stderr);
+        }
+        shell.cd(pwd);
+        done();
+    });
+};
 
-gulp.task('clean', function (cb) {
-    return glob('./**/*.ts', function (err, files) {
-		var generatedFiles = files.map(function (file) {
-		  return file.replace(/.ts$/, '.js*');
-		});
+var createVsixPackage = function (done) {
+    if (!shell.which('tfx')) {
+        gutil.log('Packaging requires tfx cli. Please install with `npm install tfx-cli -g`.');
+        done();
+        return;
+    }
+    var packagingCmd = 'tfx extension create --manifest-globs vss-extension.json --root dist/src --output-path dist';
+    executeCommand(packagingCmd, shell.pwd(), done);
+};
 
-		del(generatedFiles, cb);
-	});
+var getNodeDependencies = function (done) {
+    gutil.log('Copy package.json to dist directory');
+    shell.mkdir('-p', 'dist/node_modules');
+    shell.cp('-f', 'package.json', 'dist');
+
+    gutil.log('Fetch node modules to package with tasks');
+    var npmPath = shell.which('npm');
+    var npmInstallCommand = '"' + npmPath + '" install --production';
+    executeCommand(npmInstallCommand, 'dist', done);
+};
+
+// Tasks
+gulp.task('clean', function (done) {
+    del('dist').then(function () {
+        done();
+    });
 });
 
-gulp.task('build', ['build:markdown2html']);
+gulp.task('lint', ['clean'], function () {
+    return gulp.src('src/Markdown2Html/markdown2html.ts');
+        // .pipe(tslint())
+        // .pipe(tslint.report());
+});
+
+gulp.task('build', ['build:markdown2html', 'lint'], function () {
+    return gulp.src('src/**/*', {
+            base: '.'
+        })
+        .pipe(gulp.dest('dist'));
+});
+
+// gulp.task('pre-test', ['build'], function () {
+//     return gulp.src('src/**/*.js')
+//         .pipe(istanbul({
+//             includeUntested: true
+//         }))
+//         .pipe(istanbul.hookRequire());
+// });
+
+// gulp.task('test', ['mocha-test', 'pester-test']);
+
+// gulp.task('mocha-test', ['pre-test'], function (done) {
+//     var mochaErr;
+
+//     gulp.src('test/**/*.js')
+//         .pipe(plumber())
+//         .pipe(mocha({
+//             reporter: 'spec'
+//         }))
+//         .on('error', function (err) {
+//             mochaErr = err;
+//         })
+//         .pipe(istanbul.writeReports())
+//         .on('end', function () {
+//             done(mochaErr);
+//         });
+// });
+
+// gulp.task('pester-test', ['pre-test'], function (done) {
+//     // Runs powershell unit tests based on pester
+//     var pester = spawn('powershell.exe', ['-Command', 'Invoke-Pester -EnableExit -Path test'], {
+//         stdio: 'inherit'
+//     });
+//     pester.on('exit', function (code) {
+//         if (code === 0) {
+//             done();
+//         } else {
+//             done('Pester tests failed!');
+//         }
+//     });
+
+//     pester.on('error', function () {
+//         // We may be in a non-windows machine or powershell.exe is not in path. Skip pester tests.
+//         done();
+//     });
+// });
+
+// gulp.task('default', ['test']);
+gulp.task('default', );
+
+gulp.task('package', function (done) {
+    // gulp.task('package', ['test'], function (done) {
+    getNodeDependencies(function () {
+        // TODO We need a per task dependency copy
+        copyNodeModulesToTasks(function () {
+            createVsixPackage(done);
+        });
+    });
+});
 
 gulp.task('build:markdown2html', function () {
-    var tsProject = typescript.createProject('./markdown2html/tsconfig.json');
+    var tsProject = typescript.createProject('src/markdown2html/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
-        .pipe(gulp.dest(function(file) {
-			return file.base;
-		}));
-});
-
-gulp.task('watch', ['watch:markdown2html']);
-
-gulp.task('watch:markdown2html', ['build:markdown2html'], function () {
-    gulp.watch('./markdown2html/**/*.ts', ['build:markdown2html']);
-});
-
-gulp.task('addVersion', function () {
-    var pkg = JSON.parse(fs.readFileSync('./vss-extension.json', 'utf8'));
-    var oldVersion = pkg.version;
-
-    var argv = args.argv;
-    var type = argv.type;
-    var version = argv.version;
-    var options = {};
-    
-    if (!type){
-        type = "patch";
-    }
-    options.type = type;
-
-    var newVersion = semver.inc(oldVersion, type);
-    options.version = newVersion;
-
-    console.log("New Version is: " + newVersion);
-
-    var bump1 = gulp
-        .src(['./markdown2html/task.json'])
-        .pipe(jeditor(function(json){
-            json.version = {
-                "Major": semver.major(newVersion).toString(),
-                "Minor": semver.minor(newVersion).toString(),
-                "Patch": semver.patch(newVersion).toString()
-            };
-            return json;    
-        }))
-        .pipe(gulp.dest(function(file) {
-			return file.base;
-		}));
-
-    var bump2 = gulp
-        .src(['./package.json'])
-        .pipe(bump(options))
-        .pipe(gulp.dest(function(file) {
-			return file.base;
-		}));
-    
-    var bump3 = gulp
-        .src(['./vss-extension.json'])
-        .pipe(bump(options))
-        .pipe(gulp.dest(function(file) {
-			return file.base;
-		}));
-    
-    return merge(bump1, bump2, bump3);
-});
-
-gulp.task('package:clean', function () {
-    return del(['package/*/**']);
-});
-
-gulp.task('package', ['package:copy'], function () {	
-});
-
-gulp.task('package:copy', ['package:clean'], function () {
-    var main = gulp.src([
-                './extension-icon*.png', 'LICENSE', 'README.md', 'vss-extension.json', 'package.json', 
-                'docs/**/*', 
-                './markdown2html/markdown2html.js', './markdown2html/package.json', './markdown2html/task.json', './markdown2html/icon.png'],
-                 {base: "."})
-        .pipe(gulp.dest("./package"));
-
-    return merge(main);	
+        .pipe(gulp.dest(function (file) {
+            return file.base;
+        }));
 });
