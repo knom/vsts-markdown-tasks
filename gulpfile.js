@@ -137,7 +137,7 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 // });
 
 // gulp.task('default', ['test']);
-gulp.task('default', );
+gulp.task('default');
 
 gulp.task('package', function (done) {
     // gulp.task('package', ['test'], function (done) {
