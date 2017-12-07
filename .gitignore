@@ -1,3 +1,4 @@
+dist/*
 *.js.map
 *.vsix
 markdown2html.js
