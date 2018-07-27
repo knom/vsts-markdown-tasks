@@ -26,6 +26,7 @@ import lazyHeaders = require('markdown-it-lazy-headers');
 import dust = require('dustjs-linkedin');
 import util = require('util');
 import mditAnchor = require('markdown-it-anchor');
+import mditImsize = require('markdown-it-imsize')
 
 function transformTemplate(templatePath: string, templateObject: any) {
 	let deferred = q.defer();
@@ -105,6 +106,7 @@ function run() {
 				level: 1,
 				permalink: false
 			})
+			md.use(mditImsize)
 
 			tl.debug("Rendering markdown to html...");
 			var result = md.render(data);
