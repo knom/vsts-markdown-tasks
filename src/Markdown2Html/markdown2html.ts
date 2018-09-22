@@ -1,4 +1,5 @@
-/// <reference path="../../typings/markdown-it-lazy-headers/index.d.ts" />
+/// <reference path="../../types/markdown-it-lazy-headers/index.d.ts" />
+/// <reference path="../../types/markdown-it-imsize/index.d.ts" />
 
 // upload just build task to VSTS...
 // tfx build tasks upload --task-path ./
@@ -28,6 +29,7 @@ import lazyHeaders = require("markdown-it-lazy-headers");
 import dust = require("dustjs-linkedin");
 import util = require("util");
 import mditAnchor = require("markdown-it-anchor");
+import mditImsize = require("markdown-it-imsize");
 
 function transformTemplate(templatePath: string, templateObject: any): any {
 	let deferred: q.Deferred<any> = q.defer();
@@ -105,6 +107,9 @@ function run(): void {
 			md.use(mditAnchor, {
 				level: 1,
 				permalink: false
+			});
+			md.use(mditImsize, <mditImsize.ImSizeOptions>{
+				autofill: true
 			});
 
 			tl.debug("Rendering markdown to html...");
