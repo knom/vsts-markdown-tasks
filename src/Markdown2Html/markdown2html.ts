@@ -104,7 +104,7 @@ function run(): void {
 
 			var md: mdit.MarkdownIt = mdit();
 			md.use(lazyHeaders);
-			md.use(mditAnchor, {
+			md.use(mditAnchor, <mditAnchor.AnchorOptions>{
 				level: 1,
 				permalink: false
 			});
