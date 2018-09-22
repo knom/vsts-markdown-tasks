@@ -13,6 +13,7 @@
     "dustjs-linkedin": "^2.7.5",
     "markdown-it": "^8.2.2",
     "markdown-it-anchor": "^5.0.2",
+    "markdown-it-imsize": "^2.0.1",
     "markdown-it-lazy-headers": "^0.1.3",
     "q": "^1.4.1",
     "vsts-task-lib": "^1.1.0"
