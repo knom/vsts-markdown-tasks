@@ -31,18 +31,18 @@ import util = require("util");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 
-function transformTemplate(templatePath: string, templateObject: any): any {
+function transformTemplate(templatePath: string, templateObject: any): q.Promise<any> {
 	let deferred: q.Deferred<any> = q.defer();
 
 	if (templatePath) {
-		fs.readFile(templatePath, "utf8", function (err: any, data: string): void {
+		fs.readFile(templatePath, "utf8", (err: any, data: string) => {
 			if (err) {
 				throw err;
 			}
 
 			tl.debug(util.format("Applying HTML template using parameters %j...", JSON.stringify(templateObject)));
 
-			dust.renderSource(data, templateObject, function (err: any, out: string): void {
+			dust.renderSource(data, templateObject, (err: any, out: string) => {
 				tl.debug("Applying HTML template succeeded!");
 
 				if (err) {
@@ -95,14 +95,14 @@ function run(): void {
 		throwIfDirectory("templatePath", templatePath);
 
 		tl.debug("Reading markdown file " + markdownPath + " (UTF-8)...");
-		fs.readFile(markdownPath, "utf8", function (err: any, data: any): void {
+		fs.readFile(markdownPath, "utf8", (err: any, data: string) => {
 			if (err) {
 				throw err;
 			}
 
 			tl.debug("Reading file " + markdownPath + " succeeded!");
 
-			var md: mdit.MarkdownIt = mdit();
+			let md: mdit.MarkdownIt = mdit();
 			md.use(lazyHeaders);
 			md.use(mditAnchor, <mditAnchor.AnchorOptions>{
 				level: 1,
@@ -113,7 +113,7 @@ function run(): void {
 			});
 
 			tl.debug("Rendering markdown to html...");
-			var result: any = md.render(data);
+			let result: string = md.render(data);
 			tl.debug("Rendering markdown to html succeeded!");
 
 			let parametersObject: any = null;
@@ -130,7 +130,7 @@ function run(): void {
 				parametersObject.body = result;
 			}
 
-			transformTemplate(templatePath, parametersObject).then(function (tresult: string): any {
+			transformTemplate(templatePath, parametersObject).then((tresult: string) => {
 				tl.debug("Writing HTML file " + htmlPath + "...");
 				fs.writeFileSync(htmlPath, tresult);
 				tl.debug("Writing HTML file " + htmlPath + " succeeded!");
