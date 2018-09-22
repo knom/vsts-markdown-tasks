@@ -77,20 +77,29 @@ gulp.task('clean', function (done) {
     });
 });
 
-gulp.task('lint', ['clean'], function () {
+gulp.task('lint', gulp.parallel('clean'), function () {
     return gulp.src('src/Markdown2Html/markdown2html.ts');
         // .pipe(tslint())
         // .pipe(tslint.report());
 });
 
-gulp.task('build', ['build:markdown2html', 'lint'], function () {
+gulp.task('build:markdown2html', function () {
+    var tsProject = typescript.createProject('src/markdown2html/tsconfig.json');
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest(function (file) {
+            return file.base;
+        }));
+});
+
+gulp.task('build', gulp.parallel('build:markdown2html', 'lint'), function () {
     return gulp.src('src/**/*', {
             base: '.'
         })
         .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('pre-test', ['build'], function () {
+// gulp.task('pre-test', gulp.parallel('build'), function () {
 //     return gulp.src('src/**/*.js')
 //         .pipe(istanbul({
 //             includeUntested: true
@@ -98,9 +107,9 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 //         .pipe(istanbul.hookRequire());
 // });
 
-// gulp.task('test', ['mocha-test', 'pester-test']);
+// gulp.task('test', gulp.parallel('mocha-test', 'pester-test'));
 
-// gulp.task('mocha-test', ['pre-test'], function (done) {
+// gulp.task('mocha-test', gulp.parallel('pre-test'), function (done) {
 //     var mochaErr;
 
 //     gulp.src('test/**/*.js')
@@ -117,7 +126,7 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 //         });
 // });
 
-// gulp.task('pester-test', ['pre-test'], function (done) {
+// gulp.task('pester-test', gulp.parallel('pre-test'), function (done) {
 //     // Runs powershell unit tests based on pester
 //     var pester = spawn('powershell.exe', ['-Command', 'Invoke-Pester -EnableExit -Path test'], {
 //         stdio: 'inherit'
@@ -136,24 +145,15 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 //     });
 // });
 
-// gulp.task('default', ['test']);
+// gulp.task('default', gulp.parallel('test'));
 gulp.task('default');
 
 gulp.task('package', function (done) {
-    // gulp.task('package', ['test'], function (done) {
+    // gulp.task('package', gulp.parallel('test'), function (done) {
     getNodeDependencies(function () {
         // TODO We need a per task dependency copy
         copyNodeModulesToTasks(function () {
             done();
         });
     });
-});
-
-gulp.task('build:markdown2html', function () {
-    var tsProject = typescript.createProject('src/markdown2html/tsconfig.json');
-    return tsProject.src()
-        .pipe(tsProject())
-        .pipe(gulp.dest(function (file) {
-            return file.base;
-        }));
 });
