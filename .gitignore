@@ -36,8 +36,6 @@ build/Release
 node_modules
 jspm_packages
 
-typings
-
 # Optional npm cache directory
 .npm
 
