@@ -88,6 +88,11 @@ function run(): void {
 			templatePath = null;
 		}
 
+		let passThruHTML: boolean = tl.getBoolInput("passThruHTML", false);
+		if (!passThruHTML) {
+			passThruHTML = false;
+		}
+
 		let parameters: string = tl.getInput("parameters", false);
 
 		throwIfDirectory("markdownPath", markdownPath);
@@ -102,7 +107,9 @@ function run(): void {
 
 			tl.debug("Reading file " + markdownPath + " succeeded!");
 
-			let md: mdit.MarkdownIt = mdit();
+			let md: mdit.MarkdownIt = mdit({
+				html: passThruHTML
+			});
 			md.use(lazyHeaders);
 			md.use(mditAnchor, <mditAnchor.AnchorOptions>{
 				level: 1,
