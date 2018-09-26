@@ -109,7 +109,7 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 });
 
 gulp.task('pre-test', ['build'], function () {
-    return gulp.src('src/**/*.js');
+    return gulp.src('src/**/*.js')
         .pipe(istanbul({
            includeUntested: true
         }))
