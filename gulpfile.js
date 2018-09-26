@@ -111,14 +111,14 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 gulp.task('pre-test', ['build'], function () {
     return gulp.src('src/**/*.js')
         .pipe(istanbul({
-           includeUntested: true
+            includeUntested: true
         }))
         .pipe(istanbul.hookRequire());
 });
 
 // gulp.task('test', gulp.parallel('mocha-test', 'pester-test'));
 
-gulp.task('mocha-test', [ 'build:tests'], function (done) { //'pre-test',
+gulp.task('mocha-test', ['build:tests'], function (done) { //'pre-test',
     var mochaErr;
 
     gulp.src('test/**/test.js')
