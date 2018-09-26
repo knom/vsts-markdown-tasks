@@ -124,7 +124,7 @@ gulp.task('mocha-test', ['pre-test', 'build:tests'], function (done) {
     gulp.src('test/**/test.js')
         .pipe(plumber())
         .pipe(mocha({
-            reporter: 'spec'
+            reporter: 'mocha-junit-reporter'
         }))
         .on('error', function (err) {
             mochaErr = err;
