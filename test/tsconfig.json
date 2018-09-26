@@ -12,6 +12,7 @@
         "Template_Mock.ts",
         "Parameters_Mock.ts",
         "FailNoExistMdFile_Mock.ts",
-        "FailInlineHtmlEncoding_Mock.ts"
+        "FailInlineHtmlEncoding_Mock.ts",
+        "PassThruInlineHtmlEncoding_Mock.ts"
     ]
 }

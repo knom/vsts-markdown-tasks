@@ -124,4 +124,23 @@ describe("VSTS Markdown Task Tests", () => {
 
         done();
     });
+
+    it("Should successfully encode inline HTML when flag is set", (done) => {
+        const taskPath = path.join(__dirname, "PassThruInlineHtmlEncoding_Mock.js");
+        const expectedHtmlPath = path.join(__dirname, "sample-md-files", "EncodeInlineHtmlEncoding-expected.html");
+        const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
+
+        const testRunner = new ttm.MockTestRunner(taskPath);
+        testRunner.run();
+
+        assert(testRunner.succeeded, "should have succeeded");
+        chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
+        assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
+
+        const html = readAndNormalize(actualHtmlPath);
+        const markdown = readAndNormalize(expectedHtmlPath);
+
+        chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
+        done();
+    });
 });
