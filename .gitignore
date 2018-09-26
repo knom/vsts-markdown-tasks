@@ -3,6 +3,9 @@ dist/*
 *.vsix
 markdown2html.js
 
+test/*.js
+test/*.js.map
+
 # Logs
 logs
 *.log

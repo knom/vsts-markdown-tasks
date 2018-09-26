@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true
+    },
+    "files": [
+        "test.ts",
+        "Simple_Mock.ts",
+        "Template_Mock.ts",
+        "Parameters_Mock.ts",
+        "FailNoExistMdFile_Mock.ts",
+        "FailInlineHtmlEncoding_Mock.ts"
+    ]
+}
