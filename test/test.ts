@@ -7,6 +7,11 @@ import ma = require("vsts-task-lib/mock-answer");
 import tmrm = require("vsts-task-lib/mock-run");
 import * as ttm from "vsts-task-lib/mock-test";
 
+function readAndNormalize(filePath: string) {
+    const content = fs.readFileSync(filePath, "utf8");
+    return content.trim();
+}
+
 // tslint:disable-next-line:no-unused-expression
 describe("VSTS Markdown Task Tests", () => {
 
@@ -35,8 +40,8 @@ describe("VSTS Markdown Task Tests", () => {
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
 
-        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = readAndNormalize(actualHtmlPath);
+        const markdown: string = readAndNormalize(expectedHtmlPath);
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
@@ -69,8 +74,8 @@ describe("VSTS Markdown Task Tests", () => {
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         chai.expect(testRunner.errorIssues.length).to.equal(0, "should have no errors");
 
-        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = readAndNormalize(actualHtmlPath);
+        const markdown: string = readAndNormalize(expectedHtmlPath);
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
@@ -89,8 +94,8 @@ describe("VSTS Markdown Task Tests", () => {
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
 
-        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = readAndNormalize(actualHtmlPath);
+        const markdown: string = readAndNormalize(expectedHtmlPath);
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
         done();
@@ -113,8 +118,8 @@ describe("VSTS Markdown Task Tests", () => {
         // assert(tr.stdout.indexOf("atool output here") >= 0, "tool stdout");
         // assert(tr.stdout.indexOf("Hello Mock!") >= 0, "task module is called");
 
-        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = readAndNormalize(actualHtmlPath);
+        const markdown: string = readAndNormalize(expectedHtmlPath);
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
