@@ -42,7 +42,7 @@ function transformTemplate(templatePath: string, templateObject: any): q.Promise
 
 			tl.debug(util.format("Applying HTML template using parameters %j...", JSON.stringify(templateObject)));
 
-			dust.renderSource(data, templateObject, (err: any, out: string) => {
+			dust.renderSource("{%esc:s}\n" + data + "{/esc}", templateObject, (err: any, out: string) => {
 				tl.debug("Applying HTML template succeeded!");
 
 				if (err) {
