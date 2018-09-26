@@ -1,11 +1,11 @@
-import * as fs from 'fs';
-import * as path from "path";
 import * as assert from "assert";
-import * as ttm from "vsts-task-lib/mock-test";
+import * as chai from "chai";
+import * as fs from "fs";
+import * as mocha from "mocha";
+import * as path from "path";
 import ma = require("vsts-task-lib/mock-answer");
 import tmrm = require("vsts-task-lib/mock-run");
-import * as chai from "chai";
-import * as mocha from "mocha";
+import * as ttm from "vsts-task-lib/mock-test";
 
 // tslint:disable-next-line:no-unused-expression
 describe("VSTS Markdown Task Tests", () => {
@@ -24,20 +24,19 @@ describe("VSTS Markdown Task Tests", () => {
     });
 
     it("Should succeed with simple inputs, but lazy headers", (done: MochaDone) => {
-        let taskPath: string = path.join(__dirname, "Simple_Mock.js");
-        let expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple-expected.html");
-        let actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
+        const taskPath: string = path.join(__dirname, "Simple_Mock.js");
+        const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple-expected.html");
+        const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-
-        let testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
 
-        let html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        let markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
+        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
@@ -45,9 +44,9 @@ describe("VSTS Markdown Task Tests", () => {
     });
 
     it("Should fail with non-existing Markdown file path", (done: MochaDone) => {
-        let taskPath: string = path.join(__dirname, "FailNoExistMdFile_Mock.js");
+        const taskPath: string = path.join(__dirname, "FailNoExistMdFile_Mock.js");
 
-        let testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.failed, "should have failed");
@@ -58,19 +57,20 @@ describe("VSTS Markdown Task Tests", () => {
     });
 
     it("Should badly encode inline HTML", (done: MochaDone) => {
-        let taskPath: string = path.join(__dirname, "FailInlineHtmlEncoding_Mock.js");
-        let expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "FailInlineHtmlEncoding-expected.html");
-        let actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
+        const taskPath: string = path.join(__dirname, "FailInlineHtmlEncoding_Mock.js");
+        const expectedHtmlPath: string = path.join(__dirname, "sample-md-files",
+            "FailInlineHtmlEncoding-expected.html");
+        const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        let testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         chai.expect(testRunner.errorIssues.length).to.equal(0, "should have no errors");
 
-        let html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        let markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
+        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
@@ -78,30 +78,30 @@ describe("VSTS Markdown Task Tests", () => {
     });
 
     it("Should succeed with input & template set", (done: MochaDone) => {
-        let taskPath: string = path.join(__dirname, "Template_Mock.js");
-        let expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Template-expected.html");
-        let actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
+        const taskPath: string = path.join(__dirname, "Template_Mock.js");
+        const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Template-expected.html");
+        const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        let testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
         assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
 
-        let html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        let markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
+        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
         done();
     });
 
     it("Should succeed with input, template & parameters set", (done: MochaDone) => {
-        let taskPath: string = path.join(__dirname, "Parameters_Mock.js");
-        let expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Parameters-expected.html");
-        let actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
+        const taskPath: string = path.join(__dirname, "Parameters_Mock.js");
+        const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Parameters-expected.html");
+        const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        let testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -113,8 +113,8 @@ describe("VSTS Markdown Task Tests", () => {
         // assert(tr.stdout.indexOf("atool output here") >= 0, "tool stdout");
         // assert(tr.stdout.indexOf("Hello Mock!") >= 0, "task module is called");
 
-        let html: string = fs.readFileSync(actualHtmlPath, "utf8");
-        let markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
+        const html: string = fs.readFileSync(actualHtmlPath, "utf8");
+        const markdown: string = fs.readFileSync(expectedHtmlPath, "utf8");
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
 
