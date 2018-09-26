@@ -129,10 +129,9 @@ gulp.task('mocha-test', [ 'build:tests'], function (done) { //'pre-test',
         .on('error', function (err) {
             mochaErr = err;
         })
-        //.pipe(istanbul.writeReports())
         .on('end', function () {
             done(mochaErr);
-        });
+        }); //.pipe(istanbul.writeReports())
 });
 
 // gulp.task('pester-test', ['pre-test'], function (done) {
