@@ -92,6 +92,11 @@ function run(): void {
 
         const parameters: string = tl.getInput("parameters", false);
 
+        let passThruHTML: boolean = tl.getBoolInput("passThruHTML", false);
+        if (!passThruHTML) {
+            passThruHTML = false;
+        }
+
         throwIfDirectory("markdownPath", markdownPath);
         throwIfDirectory("htmlPath", htmlPath);
         throwIfDirectory("templatePath", templatePath);
@@ -104,7 +109,10 @@ function run(): void {
 
             tl.debug("Reading file " + markdownPath + " succeeded!");
 
-            const md: mdit.MarkdownIt = mdit();
+            const md: mdit.MarkdownIt = mdit({
+                html: passThruHTML,
+            });
+
             md.use(lazyHeaders);
             md.use(mditAnchor, <mditAnchor.AnchorOptions>{
                 level: 1,

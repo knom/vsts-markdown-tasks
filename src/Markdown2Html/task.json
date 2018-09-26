@@ -10,6 +10,11 @@
     "Build",
     "Release"
   ],
+  "groups": [{
+    "name": "advanced",
+    "displayName": "Advanced Settings",
+    "isExpanded": true
+  }],
   "runsOn": [
     "Agent",
     "DeploymentGroup"
@@ -42,6 +47,7 @@
     "label": "JSON Template parameters",
     "defaultValue": "{}",
     "required": false,
+    "groupName": "advanced",
     "helpMarkDown": "JSON object with additional parameters for the HTML template. Use the parameters as *{pName}* in the HTML template."
   }, {
     "name": "htmlPath",
@@ -50,6 +56,14 @@
     "defaultValue": "",
     "required": true,
     "helpMarkDown": "Path to the output HTML file"
+  }, {
+    "name": "passThruHTML",
+    "type": "boolean",
+    "label": "Pass through HTML content unencoded",
+    "defaultValue": false,
+    "required": false,
+    "groupName": "advanced",
+    "helpMarkDown": "Whether to pass through HTML content unencoded"
   }],
   "execution": {
     "Node": {

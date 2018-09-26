@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}\\markdown2html\\markdown2html.js",
+            "program": "${workspaceRoot}\\src\\markdown2html\\markdown2html.js",
             "cwd": "${workspaceRoot}",
             "outFiles": [],
             "sourceMaps": true,
@@ -17,7 +17,8 @@
                 "INPUT_markdownPath" : "Readme.md",
                 "INPUT_htmlPath" : "markdown2html/sample/sample.html",
                 "INPUT_templatePath" : "markdown2html/sample/sample.html.tmpl",
-                "INPUT_parameters" : "{\"title\":\"Sample Title\"}"
+                "INPUT_parameters" : "{\"title\":\"Sample Title\"}",
+                "INPUT_passThruHTML" : "true"
             }
         },
         {

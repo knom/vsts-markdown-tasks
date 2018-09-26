@@ -1,3 +1,7 @@
+.taskkey
+test-*.xml
+Output.html
+
 dist/*
 *.js.map
 *.vsix
