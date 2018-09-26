@@ -1,15 +1,14 @@
 import * as assert from "assert";
 import * as chai from "chai";
 import * as fs from "fs";
-import * as mocha from "mocha";
 import * as path from "path";
-import ma = require("vsts-task-lib/mock-answer");
-import tmrm = require("vsts-task-lib/mock-run");
 import * as ttm from "vsts-task-lib/mock-test";
 
 function readAndNormalize(filePath: string) {
     const content = fs.readFileSync(filePath, "utf8");
-    return content.trim();
+
+    const normalizeNewline = require("normalize-newline");
+    return normalizeNewline(content.trim());
 }
 
 // tslint:disable-next-line:no-unused-expression

@@ -92,7 +92,7 @@ gulp.task('build:markdown2html', function () {
         }));
 });
 
-gulp.task('build:tests', function () {
+gulp.task('build:tests', ['build'], function () {
     var tsProject = typescript.createProject('test/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
@@ -109,7 +109,7 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
 });
 
 gulp.task('pre-test', ['build'], function () {
-    return gulp.src('src/**/*.js')
+    return gulp.src('src/**/markdown2html*.js')
         .pipe(istanbul({
             includeUntested: true
         }))
@@ -118,21 +118,25 @@ gulp.task('pre-test', ['build'], function () {
 
 // gulp.task('test', gulp.parallel('mocha-test', 'pester-test'));
 
-gulp.task('mocha-test', ['build:tests'], function (done) { //'pre-test',
-    var mochaErr;
+gulp.task('mocha-test', ['build:tests'],
+    function (done) { //'pre-test',
+        var mochaErr;
 
-    gulp.src('test/**/test.js')
-        .pipe(plumber())
-        .pipe(mocha({
-            reporter: 'mocha-junit-reporter'
-        }))
-        .on('error', function (err) {
-            mochaErr = err;
-        })
-        .on('end', function () {
-            done(mochaErr);
-        }); //.pipe(istanbul.writeReports())
-});
+        gulp.src('test/**/test.js')
+
+            .pipe(mocha({
+                reporter: 'mocha-junit-reporter'
+            }))
+            .on('error', function (err) {
+                mochaErr = err;
+            })
+            .on('end', function () {
+                // process.exit();
+                done(mochaErr);
+            })
+            .pipe(plumber());
+        //.pipe(istanbul.writeReports());
+    });
 
 // gulp.task('pester-test', ['pre-test'], function (done) {
 //     // Runs powershell unit tests based on pester
