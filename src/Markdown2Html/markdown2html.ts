@@ -112,6 +112,7 @@ function run(): void {
             const md: mdit.MarkdownIt = mdit({
                 html: passThruHTML,
             });
+
             md.use(lazyHeaders);
             md.use(mditAnchor, <mditAnchor.AnchorOptions>{
                 level: 1,
