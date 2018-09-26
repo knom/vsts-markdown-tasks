@@ -1,7 +1,14 @@
+.taskkey
+test-*.xml
+Output.html
+
 dist/*
 *.js.map
 *.vsix
 markdown2html.js
+
+test/*.js
+test/*.js.map
 
 # Logs
 logs

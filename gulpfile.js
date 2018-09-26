@@ -5,8 +5,8 @@ var path = require('path');
 var del = require('del');
 var tslint = require('gulp-tslint');
 var gulp = require('gulp');
-// var istanbul = require('gulp-istanbul');
-// var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
+var mocha = require('gulp-mocha');
 var plumber = require('gulp-plumber');
 var shell = require('shelljs');
 var spawn = require('child_process').spawn;
@@ -78,13 +78,22 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('lint', ['clean'], function () {
-    return gulp.src('src/Markdown2Html/markdown2html.ts');
-        // .pipe(tslint())
-        // .pipe(tslint.report());
+    return gulp.src('src/Markdown2Html/markdown2html.ts')
+        .pipe(tslint())
+        .pipe(tslint.report());
 });
 
 gulp.task('build:markdown2html', function () {
     var tsProject = typescript.createProject('src/markdown2html/tsconfig.json');
+    return tsProject.src()
+        .pipe(tsProject())
+        .pipe(gulp.dest(function (file) {
+            return file.base;
+        }));
+});
+
+gulp.task('build:tests', ['build'], function () {
+    var tsProject = typescript.createProject('test/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
         .pipe(gulp.dest(function (file) {
@@ -99,32 +108,35 @@ gulp.task('build', ['build:markdown2html', 'lint'], function () {
         .pipe(gulp.dest('dist'));
 });
 
-// gulp.task('pre-test', ['build'], function () {
-//     return gulp.src('src/**/*.js')
-//         .pipe(istanbul({
-//             includeUntested: true
-//         }))
-//         .pipe(istanbul.hookRequire());
-// });
+gulp.task('pre-test', ['build'], function () {
+    return gulp.src('src/**/markdown2html*.js')
+        .pipe(istanbul({
+            includeUntested: true
+        }))
+        .pipe(istanbul.hookRequire());
+});
 
 // gulp.task('test', gulp.parallel('mocha-test', 'pester-test'));
 
-// gulp.task('mocha-test', ['pre-test'], function (done) {
-//     var mochaErr;
+gulp.task('mocha-test', ['build:tests'],
+    function (done) { //'pre-test',
+        var mochaErr;
 
-//     gulp.src('test/**/*.js')
-//         .pipe(plumber())
-//         .pipe(mocha({
-//             reporter: 'spec'
-//         }))
-//         .on('error', function (err) {
-//             mochaErr = err;
-//         })
-//         .pipe(istanbul.writeReports())
-//         .on('end', function () {
-//             done(mochaErr);
-//         });
-// });
+        gulp.src('test/**/test.js')
+
+            .pipe(mocha({
+                reporter: 'mocha-junit-reporter'
+            }))
+            .on('error', function (err) {
+                mochaErr = err;
+            })
+            .on('end', function () {
+                // process.exit();
+                done(mochaErr);
+            })
+            .pipe(plumber());
+        //.pipe(istanbul.writeReports());
+    });
 
 // gulp.task('pester-test', ['pre-test'], function (done) {
 //     // Runs powershell unit tests based on pester

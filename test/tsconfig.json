@@ -7,6 +7,11 @@
         "sourceMap": true
     },
     "files": [
-		"markdown2html.ts"
+        "test.ts",
+        "Simple_Mock.ts",
+        "Template_Mock.ts",
+        "Parameters_Mock.ts",
+        "FailNoExistMdFile_Mock.ts",
+        "FailInlineHtmlEncoding_Mock.ts"
     ]
 }

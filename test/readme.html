@@ -1,0 +1,74 @@
+<h1 id="markdown-2-html-vsts-build%2Frelease-task">Markdown 2 HTML VSTS Build/Release Task <img src="https://knom.visualstudio.com/_apis/public/build/definitions/969cb309-5d7f-427d-b48a-43eeac3c4aaf/20/badge" alt="Build Status"></h1>
+<p>Useful for converting <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a> language into HTML.</p>
+<h2 id="supported-platforms">Supported Platforms</h2>
+<ul>
+<li>Visual Studio Team Services</li>
+<li>Team Foundation Server 2015 Update 3 and higher (<a href="https://www.visualstudio.com/en-us/docs/marketplace/get-tfs-extensions">How to install extensions in TFS</a>)</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>The extension installs the follow tasks:</p>
+<p><img src="https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/docs/addtask.png" alt="Extension Tasks" title="Extension Tasks"></p>
+<ul>
+<li>
+<h3 id="markdown-to-html">Markdown To HTML</h3>
+<p>Transforms a Markdown file to an HTML file.</p>
+<p><img src="https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/docs/markdown2html.png" alt="Screenshot" title="Screenshot"></p>
+<h4 id="parameters%3A">Parameters:</h4>
+<ul>
+<li>
+<p>Markdown file path:</p>
+<ul>
+<li>The path of the input Markdown file.</li>
+<li>It can contain variables such as $(Build.ArtifactStagingDirectory)</li>
+</ul>
+</li>
+<li>
+<p>HTML template file path:</p>
+<ul>
+<li>
+<p>The path of the HTML file used as a template.</p>
+</li>
+<li>
+<p>The placeholder for the inserted converted Ex-Markdown is</p>
+<pre><code>  {body|s}
+</code></pre>
+<p>Put it wherever you want the converted Markdown to show up in the template.</p>
+</li>
+<li>
+<p>Other custom placeholders for parameters can be used such as</p>
+<pre><code>  {title}
+  {author}
+</code></pre>
+<p>These parameters need to be passed in as JSON.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>JSON Template Parameters:</p>
+<ul>
+<li>
+<p>The parameters to be used instead of placeholders in the template file.</p>
+</li>
+<li>
+<p><strong>body</strong> is automatically filled</p>
+</li>
+<li>
+<p>The parameters are case-sensitive</p>
+<pre><code>  {&quot;title&quot;: &quot;Release Notes&quot;, &quot;Author&quot;: &quot;knom&quot;}
+</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>HTML output file path:</p>
+<ul>
+<li>The path of the output HTML file. If the file does not exist, it will be created.</li>
+<li>If the file exists, it will be overwritten.</li>
+<li>It can contain variables such as $(Build.ArtifactStagingDirectory).</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="license">License</h2>
+<p>Published under <a href="https://github.com/knom/vsts-markdown-tasks/blob/master/LICENSE">Apache 2.0 License</a>.</p>

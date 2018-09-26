@@ -1,0 +1,12 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-angle-bracket-type-assertion": false,
+        "whitespace": [true, "check-branch", "check-operator"]
+    },
+    "rulesDirectory": []
+}
