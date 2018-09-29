@@ -1,4 +1,4 @@
-# Markdown 2 HTML VSTS/Azure DevOps Build/Release Task ![Build Status](https://knom-msft.visualstudio.com/_apis/public/build/definitions/9d8fcb7c-6c11-4014-9dc2-7966c94af2b2/8/badge)
+# Markdown 2 HTML VSTS/Azure DevOps Build/Release Task [![Version](https://img.shields.io/vscode-marketplace/v/knom.markdown-task.svg?label=VS%20Marketplace&logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=knom.markdown-task) [![Visual Studio Marketplace Downloads](https://img.shields.io/vscode-marketplace/d/knom.markdown-task.svg?logo=visual-studio-code&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=knom.markdown-task) [![GitHub License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/knom/vsts-markdown-tasks/blob/master/LICENSE) ![Build Status](https://knom-msft.visualstudio.com/_apis/public/build/definitions/9d8fcb7c-6c11-4014-9dc2-7966c94af2b2/8/badge)
 Useful for converting [Markdown](https://en.wikipedia.org/wiki/Markdown) language into HTML.
 
 ## Supported Platforms ##
