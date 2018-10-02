@@ -1,19 +1,19 @@
+import path = require("path");
 import ma = require("vsts-task-lib/mock-answer");
 import tmrm = require("vsts-task-lib/mock-run");
-import path = require("path");
 
-let taskPath: string = path.join(__dirname, "..", "src", "Markdown2Html", "markdown2html.js");
-let markdownPath: string = path.join(__dirname, "sample-md-files", "Template.md");
-let htmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
-let templatePath: string = path.join(__dirname, "sample-md-files", "Template.html");
+const taskPath: string = path.join(__dirname, "..", "src", "Markdown2Html", "markdown2html.js");
+const markdownPath: string = path.join(__dirname, "sample-md-files", "Template.md");
+const htmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
+const templatePath: string = path.join(__dirname, "sample-md-files", "Template.html");
 
-let taskMock: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+const taskMock: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 taskMock.setInput("markdownPath", markdownPath);
 taskMock.setInput("htmlPath", htmlPath);
 taskMock.setInput("templatePath", templatePath);
 
-let answers: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
-    "checkPath": {}
+const answers: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
+    checkPath: {}, 
 };
 answers.checkPath[markdownPath] = true;
 answers.checkPath[templatePath] = true;
