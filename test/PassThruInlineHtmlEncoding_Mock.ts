@@ -7,6 +7,7 @@ const markdownPath: string = path.join(__dirname, "sample-md-files", "FailInline
 const htmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
 const taskMock: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+taskMock.setInput("mode", "singleFile");
 taskMock.setInput("markdownPath", markdownPath);
 taskMock.setInput("htmlPath", htmlPath);
 

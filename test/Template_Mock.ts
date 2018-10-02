@@ -8,15 +8,17 @@ const htmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 const templatePath: string = path.join(__dirname, "sample-md-files", "Template.html");
 
 const taskMock: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+taskMock.setInput("mode", "singleFile");
 taskMock.setInput("markdownPath", markdownPath);
 taskMock.setInput("htmlPath", htmlPath);
 taskMock.setInput("templatePath", templatePath);
 
 const answers: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
-    checkPath: {}, 
+    checkPath: {},
 };
 answers.checkPath[markdownPath] = true;
 answers.checkPath[templatePath] = true;
 
 taskMock.setAnswers(answers);
+
 taskMock.run();
