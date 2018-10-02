@@ -12,8 +12,10 @@ function readAndNormalize(filePath: string) {
 }
 
 // tslint:disable-next-line:no-unused-expression
-describe("VSTS Markdown Task Tests", () => {
-
+// tslint:disable-next-line:only-arrow-functions
+describe("VSTS Markdown Task Tests", function() {
+    this.timeout(10000);
+    this.slow(1000);
     // tslint:disable-next-line:no-empty
     before(() => {
         // tslint:disable-next-line:no-string-literal
@@ -141,6 +143,28 @@ describe("VSTS Markdown Task Tests", () => {
         const markdown = readAndNormalize(expectedHtmlPath);
 
         chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
+        done();
+    });
+
+    it("Should successfully transform multiple MD files", (done) => {
+        const taskPath = path.join(__dirname, "MultiFiles_Mock.js");
+        const expectedHtmlPath = path.join(__dirname, "sample-md-files", "Simple-expected.html");
+        const actualHtmlPath = path.join(__dirname, "out", "Simple.html");
+
+        const testRunner = new ttm.MockTestRunner(taskPath);
+        testRunner.run();
+
+        assert(testRunner.succeeded, "should have succeeded");
+        chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
+        assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
+
+        const html = readAndNormalize(actualHtmlPath);
+        const markdown = readAndNormalize(expectedHtmlPath);
+
+        chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
+
+        chai.expect(testRunner.stdout.indexOf("Successfully transformed 1 markdown files")).to.gte(0);
+
         done();
     });
 });
