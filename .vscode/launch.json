@@ -3,8 +3,7 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
+    "configurations": [{
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
@@ -14,11 +13,14 @@
             "sourceMaps": true,
             "env": {
                 "NODE_ENV": "development",
-                "INPUT_markdownPath" : "Readme.md",
-                "INPUT_htmlPath" : "markdown2html/sample/sample.html",
-                "INPUT_templatePath" : "markdown2html/sample/sample.html.tmpl",
-                "INPUT_parameters" : "{\"title\":\"Sample Title\"}",
-                "INPUT_passThruHTML" : "true"
+                // "INPUT_markdownPath" : "Readme.md",
+                "INPUT_mode": "multiFiles",
+                "INPUT_markdownPathPattern": "**/*.md,*.md,!**/node_modules/**",
+                // "INPUT_htmlPath": "markdown2html/sample/sample.html",
+                // "INPUT_htmlPath": "markdown2html/sample/sample.html",
+                // "INPUT_templatePath": "markdown2html/sample/sample.html.tmpl",
+                "INPUT_parameters": "{\"title\":\"Sample Title\"}",
+                "INPUT_passThruHTML": "true"
             }
         },
         {

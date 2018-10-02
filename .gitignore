@@ -1,6 +1,8 @@
 .taskkey
 test-*.xml
 Output.html
+test/sample-md-files/Output.html
+test/out/
 
 dist/*
 *.js.map
@@ -51,4 +53,3 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
-test/sample-md-files/Output.html

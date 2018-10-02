@@ -8,6 +8,7 @@ const htmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 const templatePath: string = path.join(__dirname, "sample-md-files", "Parameters.html");
 
 const taskMock: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+taskMock.setInput("mode", "singleFile");
 taskMock.setInput("markdownPath", markdownPath);
 taskMock.setInput("htmlPath", htmlPath);
 taskMock.setInput("templatePath", templatePath);
