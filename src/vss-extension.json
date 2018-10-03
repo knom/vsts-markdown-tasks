@@ -1,14 +1,12 @@
 {
-  "manifestVersion": 1, 
+  "manifestVersion": 1,
   "id": "markdown-task",
   "name": "Markdown2Html Build Task",
-  "version": "2.0.1", 
+  "version": "2.0.1",
   "publisher": "knom",
-  "targets": [
-    {
-      "id": "Microsoft.VisualStudio.Services"
-    }
-  ],
+  "targets": [{
+    "id": "Microsoft.VisualStudio.Services"
+  }],
   "description": "A task for converting Markdown to HTML in your build and release pipelines.",
   "public": true,
   "categories": [
@@ -23,17 +21,17 @@
   "icons": {
     "default": "images/extension-icon.png"
   },
-  "files": [
-    {
-      "path": "Markdown2Html"
-    }
-  ],
-  "screenshots": [
-    {
+  "files": [{
+    "path": "Markdown2Html"
+  }],
+  "screenshots": [{
       "path": "docs/addtask.png"
     },
     {
-      "path": "docs/markdown2html.png"
+      "path": "docs/singlefile.png"
+    },
+    {
+      "path": "docs/multifiles.png"
     }
   ],
   "content": {
@@ -65,16 +63,14 @@
     "color": "rgb(99, 4, 107)",
     "theme": "dark"
   },
-  "contributions": [
-    {
-      "id": "markdown-2-html",
-      "type": "ms.vss-distributed-task.task",
-      "targets": [
-        "ms.vss-distributed-task.tasks"
-      ],
-      "properties": {
-        "name": "Markdown2Html"
-      }
+  "contributions": [{
+    "id": "markdown-2-html",
+    "type": "ms.vss-distributed-task.task",
+    "targets": [
+      "ms.vss-distributed-task.tasks"
+    ],
+    "properties": {
+      "name": "Markdown2Html"
     }
-  ]
+  }]
 }
