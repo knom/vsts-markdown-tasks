@@ -224,8 +224,12 @@ function run(): void {
         Q.all(files).then((results) => {
             const fileLog = results.map((val) => val[0] + " ==> " + val[1]).join("\r\n");
 
-            tl.setResult(tl.TaskResult.Succeeded,
-                `Successfully transformed ${files.length} markdown files to HTML files: \r\n${fileLog}`);
+            const message = `Successfully transformed ${files.length} markdown files to HTML files: \r\n${fileLog}`;
+
+            // tslint:disable-next-line:no-console
+            console.log(message);
+
+            tl.setResult(tl.TaskResult.Succeeded, message);
         });
 
     } catch (err) {
