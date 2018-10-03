@@ -13,39 +13,78 @@ The extension installs the follow tasks:
 
 ![Extension Tasks](https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/src/docs/addtask.png "Extension Tasks")
 
-* ### Markdown To HTML
-    Transforms a Markdown file to an HTML file.
+### Transform a single Markdown file To HTML
 
-    ![Screenshot](https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/src/docs/markdown2html.png "Screenshot")
+![Screenshot](https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/src/docs/singlefile.png "Screenshot")
 
-    #### Parameters: ####
+#### Parameters: ####
 
-    * Markdown file path:
-        * The path of the input Markdown file.
-        * It can contain variables such as $(Build.ArtifactStagingDirectory)
-    * HTML template file path:
-      * The path of the HTML file used as a template.
-      * The placeholder for the inserted converted Ex-Markdown is
+* Markdown file path:
+  * The path of the input Markdown file.
+  * It can contain variables such as $(Build.ArtifactStagingDirectory)
 
-                {body|s}
-         Put it wherever you want the converted Markdown to show up in the template.
+* HTML output file path:
+  * The path of the output HTML file. If the file does not exist, it will be created.
+  * If the file exists, it will be overwritten.
+  * It can contain variables such as $(Build.ArtifactStagingDirectory).
 
-      * Other custom placeholders for parameters can be used such as
+* HTML template file path:
+  * The path of the HTML file used as a template.
+  * The placeholder for the inserted transformed Markdown is
 
-                {title}
-                {author}
-          These parameters need to be passed in as JSON.
+            {body|s}
+      Put it wherever you want the converted Markdown to show up in the template.
 
-    * JSON Template Parameters:
-      * The parameters to be used instead of placeholders in the template file.
-      * **body** is automatically filled
-      * The parameters are case-sensitive
+  * Other custom placeholders for parameters can be used such as
 
-                {"title": "Release Notes", "Author": "knom"}
-    * HTML output file path:
-      * The path of the output HTML file. If the file does not exist, it will be created. 
-      * If the file exists, it will be overwritten.
-      * It can contain variables such as $(Build.ArtifactStagingDirectory).
+            {title}
+            {author}
+      These parameters need to be passed in as JSON.
+
+* JSON Template Parameters:
+  * The parameters to be used instead of placeholders in the template file.
+  * **body** is automatically filled
+  * The parameters are case-sensitive
+
+            {"title": "Release Notes", "Author": "knom"}
+
+### Transform multiple Markdown files To HTML
+
+![Screenshot](https://raw.githubusercontent.com/knom/vsts-markdown-tasks/master/src/docs/multifiles.png "Screenshot")
+
+#### Parameters: ####
+
+* Markdown search pattern:
+  * The GLOB search patterns to input Markdown files.
+  * Multiple lines, each with a COMMA at the end
+  * E.g. `**\*.md, !**\node_modules\*`
+  * It can contain variables such as $(Build.ArtifactStagingDirectory)
+
+* HTML output folder:
+  * If **empty** the output folder will be the source folder of the Markdown files.
+  * The path of the folder for output HTML files. If the folder does not exist, it will be created.
+  * If the files exists, they will be overwritten.
+  * It can contain variables such as $(Build.ArtifactStagingDirectory).
+
+* HTML template file path:
+  * The path of the HTML file used as a template.
+  * The placeholder for the inserted transformed Markdown is
+
+            {body|s}
+      Put it wherever you want the converted Markdown to show up in the template.
+
+  * Other custom placeholders for parameters can be used such as
+
+            {title}
+            {author}
+      These parameters need to be passed in as JSON.
+
+* JSON Template Parameters:
+  * The parameters to be used instead of placeholders in the template file.
+  * **body** is automatically filled
+  * The parameters are case-sensitive
+
+            {"title": "Release Notes", "Author": "knom"}
 
 ## License ##
 
