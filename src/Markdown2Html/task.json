@@ -51,7 +51,7 @@
       "name": "markdownPathPattern",
       "type": "multiLine",
       "label": "Markdown search patterns",
-      "defaultValue": "**/*.md\n!**/node_modules/**",
+      "defaultValue": "**/*.md\n,!**/node_modules/**",
       "required": true,
       "helpMarkDown": "Search pattern for the markdown files. Can include GLOB patterns. E.g. $(Build.ArtifactStagingDirectory)\\**\\sample*.md",
       "visibleRule": "mode=multiFile"
