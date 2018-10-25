@@ -51,6 +51,6 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha ./test/test.js"
+    "test": "gulp test"
   }
 }
