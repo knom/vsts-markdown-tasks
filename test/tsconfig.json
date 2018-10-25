@@ -6,14 +6,8 @@
         "preserveConstEnums": true,
         "sourceMap": true
     },
-    "files": [
+    "include": [
         "test.ts",
-        "Simple_Mock.ts",
-        "Template_Mock.ts",
-        "Parameters_Mock.ts",
-        "FailNoExistMdFile_Mock.ts",
-        "FailInlineHtmlEncoding_Mock.ts",
-        "PassThruInlineHtmlEncoding_Mock.ts",
-        "MultiFiles_Mock.ts"
+        "*_Mock.ts"
     ]
 }
