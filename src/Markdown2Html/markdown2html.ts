@@ -28,6 +28,7 @@ import mdit = require("markdown-it");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 import lazyHeaders = require("markdown-it-lazy-headers");
+import replaceLink = require('markdown-it-replace-link');
 import path = require("path");
 import q = require("q");
 import Q = require("q");
@@ -99,7 +100,7 @@ function throwIfNotDirectory(parameter: string, checkpath: string): void {
 
 function processFile(markdownPath: string, templatePath: string, htmlOutDir: string,
     // tslint:disable-next-line:align
-    htmlOutFile: string, parameters: any, passThruHTML: boolean): q.Promise<[string, string]> {
+    htmlOutFile: string, parameters: any, passThruHTML: boolean, replaceHyperlinks: boolean): q.Promise<[string, string]> {
 
     const deferred: q.Deferred<[string, string]> = q.defer();
 
@@ -111,9 +112,17 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-        const md: mdit.MarkdownIt = mdit({
-            html: passThruHTML,
-        });
+
+        let mdo: any = { // mdit.Options
+            html: passThruHTML
+        };
+        if (replaceHyperlinks) {
+            mdo.replaceLink = (link: string) => {
+                return link.replace(/.md$/, '.html');
+            };
+        }
+
+        const md: mdit.MarkdownIt = mdit(mdo);
 
         md.use(lazyHeaders);
         md.use(mditAnchor, <mditAnchor.AnchorOptions>{
@@ -213,12 +222,16 @@ function run(): void {
         if (!passThruHTML) {
             passThruHTML = false;
         }
+        let replaceHyperlinks: boolean = tl.getBoolInput("replaceHyperlinksMD2HTML", false);
+        if (!replaceHyperlinks) {
+            replaceHyperlinks = false;
+        }
 
         throwIfDirectory("templatePath", templatePath);
 
         const files = markdownFiles.map((markdownFile) => {
             return processFile(markdownFile, templatePath, htmlOutDir,
-                htmlOutFile, parameters, passThruHTML);
+                htmlOutFile, parameters, passThruHTML, replaceHyperlinks);
         });
 
         Q.all(files).then((results) => {

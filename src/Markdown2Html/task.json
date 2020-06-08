@@ -10,11 +10,13 @@
     "Build",
     "Release"
   ],
-  "groups": [{
-    "name": "advanced",
-    "displayName": "Advanced Settings",
-    "isExpanded": true
-  }],
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced Settings",
+      "isExpanded": true
+    }
+  ],
   "runsOn": [
     "Agent",
     "DeploymentGroup"
@@ -27,7 +29,8 @@
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "Markdown2Html $(message)",
-  "inputs": [{
+  "inputs": [
+    {
       "name": "mode",
       "type": "radio",
       "label": "Mode",
@@ -38,7 +41,8 @@
         "multiFile": "Multiple Files"
       },
       "helpMarkDown": "Whether you want to process one or many files."
-    }, {
+    },
+    {
       "name": "markdownPath",
       "type": "filePath",
       "label": "Markdown file path",
@@ -73,7 +77,8 @@
       "required": false,
       "groupName": "advanced",
       "helpMarkDown": "JSON object with additional parameters for the HTML template. Use the parameters as *{pName}* in the HTML template."
-    }, {
+    },
+    {
       "name": "htmlPath",
       "type": "filePath",
       "label": "HTML output file path",
@@ -81,7 +86,8 @@
       "required": true,
       "helpMarkDown": "Path to the output HTML file",
       "visibleRule": "mode=singleFile"
-    }, {
+    },
+    {
       "name": "htmlOutDir",
       "type": "filePath",
       "label": "HTML output folder",
@@ -89,7 +95,8 @@
       "required": false,
       "helpMarkDown": "Folder path to output HTML files to. If empty, the source directories will be used.",
       "visibleRule": "mode=multiFile"
-    }, {
+    },
+    {
       "name": "passThruHTML",
       "type": "boolean",
       "label": "Pass through HTML content unencoded",
@@ -97,6 +104,15 @@
       "required": false,
       "groupName": "advanced",
       "helpMarkDown": "Whether to pass through HTML content unencoded"
+    },
+    {
+      "name": "replaceHyperlinksMD2HTML",
+      "type": "boolean",
+      "label": "Replace .MD to .HTML in Hyperlinks",
+      "defaultValue": false,
+      "required": false,
+      "groupName": "advanced",
+      "helpMarkDown": "Whether to replace .MD to .HTML in Hyperlinks in your documents."
     }
   ],
   "execution": {
