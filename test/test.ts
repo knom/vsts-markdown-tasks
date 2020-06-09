@@ -165,6 +165,25 @@ describe("VSTS Markdown Task Tests", function() {
         done();
     });
 
+    it("Should successfully replace hyperlinks when flag is set", (done) => {
+        const taskPath = path.join(__dirname, "ReplaceHyperlinks_Mock.js");
+        const expectedHtmlPath = path.join(__dirname, "sample-md-files", "ReplaceHyperlinks-expected.html");
+        const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
+
+        const testRunner = new ttm.MockTestRunner(taskPath);
+        testRunner.run();
+
+        assert(testRunner.succeeded, "should have succeeded");
+        chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
+        assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
+
+        const html = readAndNormalize(actualHtmlPath);
+        const markdown = readAndNormalize(expectedHtmlPath);
+
+        chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
+        done();
+    });
+
     it("Should successfully transform multiple MD files", (done) => {
         const taskPath = path.join(__dirname, "MultiFiles_Mock.js");
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "Simple-expected.html");

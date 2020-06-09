@@ -77,7 +77,8 @@ gulp.task('clean', function (done) {
     });
 });
 
-gulp.task('lint', ['clean'], function () {
+
+gulp.task('lint', gulp.series(['clean']), function () {
     return gulp.src('src/Markdown2Html/markdown2html.ts')
         .pipe(tslint())
         .pipe(tslint.report());
@@ -92,7 +93,7 @@ gulp.task('build:markdown2html', function () {
         }));
 });
 
-gulp.task('build:tests', ['build'], function () {
+gulp.task('build:tests', function () {
     var tsProject = typescript.createProject('test/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
@@ -101,14 +102,17 @@ gulp.task('build:tests', ['build'], function () {
         }));
 });
 
-gulp.task('build', ['build:markdown2html', 'lint'], function () {
+gulp.task('build', gulp.series(['build:markdown2html', 'build:tests', 'lint']), function () {
     return gulp.src('src/**/*', {
-            base: '.'
-        })
+        base: '.'
+    })
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('pre-test', ['build'], function () {
+
+
+
+gulp.task('pre-test', function () {
     return gulp.src('src/**/markdown2html*.js')
         .pipe(istanbul({
             includeUntested: true
@@ -116,46 +120,18 @@ gulp.task('pre-test', ['build'], function () {
         .pipe(istanbul.hookRequire());
 });
 
-// gulp.task('test', gulp.parallel('mocha-test', 'pester-test'));
-
-gulp.task('mocha-test', ['build:tests'],
+gulp.task('mocha-test', gulp.series(['build', 'pre-test']),
     function (done) { //'pre-test',
         var mochaErr;
 
         gulp.src('test/**/test.js')
-
             .pipe(mocha({
-                reporter: 'mocha-junit-reporter'
+                reporter: 'nyan' // mocha-junit-reporter
             }))
-            .on('error', function (err) {
-                mochaErr = err;
-            })
-            .on('end', function () {
-                // process.exit();
-                done(mochaErr);
-            })
-            .pipe(plumber());
-        //.pipe(istanbul.writeReports());
+            .pipe(istanbul.writeReports());
     });
 
-// gulp.task('pester-test', ['pre-test'], function (done) {
-//     // Runs powershell unit tests based on pester
-//     var pester = spawn('powershell.exe', ['-Command', 'Invoke-Pester -EnableExit -Path test'], {
-//         stdio: 'inherit'
-//     });
-//     pester.on('exit', function (code) {
-//         if (code === 0) {
-//             done();
-//         } else {
-//             done('Pester tests failed!');
-//         }
-//     });
-
-//     pester.on('error', function () {
-//         // We may be in a non-windows machine or powershell.exe is not in path. Skip pester tests.
-//         done();
-//     });
-// });
+gulp.task('test', gulp.parallel('mocha-test'));
 
 // gulp.task('default', gulp.parallel('test'));
 gulp.task('default');

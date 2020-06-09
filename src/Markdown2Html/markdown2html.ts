@@ -2,6 +2,8 @@
 /// <reference path="../../types/markdown-it-lazy-headers/index.d.ts" />
 // tslint:disable-next-line:no-reference
 /// <reference path="../../types/markdown-it-imsize/index.d.ts" />
+// tslint:disable-next-line:no-reference
+/// <reference path="../../types/markdown-it-replace-link/index.d.ts" />
 
 // upload just build task to VSTS...
 // tfx build tasks upload --task-path ./
@@ -28,7 +30,7 @@ import mdit = require("markdown-it");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 import lazyHeaders = require("markdown-it-lazy-headers");
-import replaceLink = require('markdown-it-replace-link');
+import replaceLink = require("markdown-it-replace-link");
 import path = require("path");
 import q = require("q");
 import Q = require("q");
@@ -112,17 +114,20 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-
-        let mdo: any = { // mdit.Options
+        let mdo: mdit.Options = {
             html: passThruHTML
         };
-        if (replaceHyperlinks) {
-            mdo.replaceLink = (link: string) => {
-                return link.replace(/.md$/, '.html');
-            };
-        }
 
         const md: mdit.MarkdownIt = mdit(mdo);
+
+        tl.debug("ReplaceHyperlinks = " + replaceHyperlinks);
+        if (replaceHyperlinks) {
+            md.use(replaceLink, <replaceLink.ReplaceLinkOptions>{
+                replaceLink: (link: string) => {
+                    return link.replace(/.md$/, '.html');
+                }
+            });
+        }
 
         md.use(lazyHeaders);
         md.use(mditAnchor, <mditAnchor.AnchorOptions>{
@@ -223,9 +228,6 @@ function run(): void {
             passThruHTML = false;
         }
         let replaceHyperlinks: boolean = tl.getBoolInput("replaceHyperlinksMD2HTML", false);
-        if (!replaceHyperlinks) {
-            replaceHyperlinks = false;
-        }
 
         throwIfDirectory("templatePath", templatePath);
 

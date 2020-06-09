@@ -1,12 +1,13 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "noImplicitAny": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "sourceMap": true
-    },
-    "files": [
-		"markdown2html.ts"
-    ]
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "lib": ["ES2018"]
+  },
+  "files": [
+    "markdown2html.ts"
+  ]
 }
