@@ -120,15 +120,13 @@ gulp.task('pre-test', function () {
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task('mocha-test', gulp.series(['build', 'pre-test']),
-    function (done) { //'pre-test',
-        var mochaErr;
-
-        gulp.src('test/**/test.js')
+gulp.task('mocha-test', //gulp.series(['build', 'pre-test']),
+    function () { //'pre-test',
+        return gulp.src('test/**/test.js')
             .pipe(mocha({
-                reporter: 'nyan' // mocha-junit-reporter
-            }))
-            .pipe(istanbul.writeReports());
+                reporter: 'spec' // mocha-junit-reporter
+            }));
+        // .pipe(istanbul.writeReports());
     });
 
 gulp.task('test', gulp.parallel('mocha-test'));
