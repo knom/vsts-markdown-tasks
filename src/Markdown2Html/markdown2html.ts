@@ -114,11 +114,9 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-        let mdo: mdit.Options = {
+        const md: mdit.MarkdownIt = mdit({
             html: passThruHTML
-        };
-
-        const md: mdit.MarkdownIt = mdit(mdo);
+        });
 
         tl.debug("ReplaceHyperlinks = " + replaceHyperlinks);
         if (replaceHyperlinks) {
