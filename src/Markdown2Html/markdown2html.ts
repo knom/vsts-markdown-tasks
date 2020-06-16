@@ -26,7 +26,7 @@
 
 import dust = require("dustjs-linkedin");
 import fs = require("fs");
-import mdit = require("markdown-it");
+import MarkdownIt = require("markdown-it");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 import lazyHeaders = require("markdown-it-lazy-headers");
@@ -101,8 +101,8 @@ function throwIfNotDirectory(parameter: string, checkpath: string): void {
 }
 
 function processFile(markdownPath: string, templatePath: string, htmlOutDir: string,
-    // tslint:disable-next-line:align
-    htmlOutFile: string, parameters: any, passThruHTML: boolean, replaceHyperlinks: boolean): q.Promise<[string, string]> {
+                     htmlOutFile: string, parameters: any, passThruHTML: boolean,
+                     replaceHyperlinks: boolean): q.Promise<[string, string]> {
 
     const deferred: q.Deferred<[string, string]> = q.defer();
 
@@ -114,16 +114,16 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-        const md: mdit.MarkdownIt = mdit({
-            html: passThruHTML
+        const md: MarkdownIt = MarkdownIt({
+            html: passThruHTML,
         });
 
         tl.debug("ReplaceHyperlinks = " + replaceHyperlinks);
         if (replaceHyperlinks) {
             md.use(replaceLink, <replaceLink.ReplaceLinkOptions>{
                 replaceLink: (link: string) => {
-                    return link.replace(/.md$/, '.html');
-                }
+                    return link.replace(/.md$/, ".html");
+                },
             });
         }
 
@@ -228,7 +228,7 @@ function run(): void {
         if (!passThruHTML) {
             passThruHTML = false;
         }
-        let replaceHyperlinks: boolean = tl.getBoolInput("replaceHyperlinksMD2HTML", false);
+        const replaceHyperlinks: boolean = tl.getBoolInput("replaceHyperlinksMD2HTML", false);
 
         throwIfDirectory("templatePath", templatePath);
 

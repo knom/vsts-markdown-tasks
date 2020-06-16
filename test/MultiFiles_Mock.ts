@@ -2,7 +2,7 @@ import path = require("path");
 import ma = require("vsts-task-lib/mock-answer");
 import tmrm = require("vsts-task-lib/mock-run");
 
-const taskPath: string = path.join(__dirname, "..", "src", "Markdown2Html", "markdown2html.js");
+const taskPath: string = path.join(__dirname, "..", "dist", "Markdown2Html", "markdown2html.js");
 const markdownPath: string = "**/*.md,!**/node_modules/**";
 const templatePath: string = path.join(__dirname, "sample-md-files", "Template.html");
 const markdownFileFound: string[] = [

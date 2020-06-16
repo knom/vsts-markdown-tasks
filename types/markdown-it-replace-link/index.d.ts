@@ -6,7 +6,7 @@
 declare module "markdown-it-replace-link" {
     export = replacelink;
 
-    import { MarkdownIt } from 'markdown-it';
+    import MarkdownIt = require('markdown-it');
 
     function replacelink(md: MarkdownIt): void;
 

@@ -6,7 +6,7 @@
 declare module "markdown-it-imsize" {
     export = imsize;
 
-    import { MarkdownIt, Core, Token } from 'markdown-it';
+    import MarkdownIt = require('markdown-it');
 
     function imsize(md: MarkdownIt, options: imsize.ImSizeOptions): void;
 
