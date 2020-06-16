@@ -26,7 +26,7 @@
 
 import dust = require("dustjs-linkedin");
 import fs = require("fs");
-import mdit = require("markdown-it");
+import MarkdownIt = require("markdown-it");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 import lazyHeaders = require("markdown-it-lazy-headers");
@@ -114,7 +114,7 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-        const md: mdit.MarkdownIt = mdit({
+        const md: MarkdownIt = MarkdownIt({
             html: passThruHTML
         });
 

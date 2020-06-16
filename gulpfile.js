@@ -124,7 +124,7 @@ gulp.task('mocha-test', //gulp.series(['build', 'pre-test']),
     function () { //'pre-test',
         return gulp.src('test/**/test.js')
             .pipe(mocha({
-                reporter: 'spec' // mocha-junit-reporter
+                reporter: 'mocha-junit-reporter' //'spec'
             }));
         // .pipe(istanbul.writeReports());
     });
