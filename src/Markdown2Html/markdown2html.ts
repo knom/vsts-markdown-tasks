@@ -2,6 +2,8 @@
 /// <reference path="../../types/markdown-it-lazy-headers/index.d.ts" />
 // tslint:disable-next-line:no-reference
 /// <reference path="../../types/markdown-it-imsize/index.d.ts" />
+// tslint:disable-next-line:no-reference
+/// <reference path="../../types/markdown-it-replace-link/index.d.ts" />
 
 // upload just build task to VSTS...
 // tfx build tasks upload --task-path ./
@@ -24,10 +26,11 @@
 
 import dust = require("dustjs-linkedin");
 import fs = require("fs");
-import mdit = require("markdown-it");
+import MarkdownIt = require("markdown-it");
 import mditAnchor = require("markdown-it-anchor");
 import mditImsize = require("markdown-it-imsize");
 import lazyHeaders = require("markdown-it-lazy-headers");
+import replaceLink = require("markdown-it-replace-link");
 import path = require("path");
 import q = require("q");
 import Q = require("q");
@@ -98,8 +101,8 @@ function throwIfNotDirectory(parameter: string, checkpath: string): void {
 }
 
 function processFile(markdownPath: string, templatePath: string, htmlOutDir: string,
-    // tslint:disable-next-line:align
-    htmlOutFile: string, parameters: any, passThruHTML: boolean): q.Promise<[string, string]> {
+                     htmlOutFile: string, parameters: any, passThruHTML: boolean,
+                     replaceHyperlinks: boolean): q.Promise<[string, string]> {
 
     const deferred: q.Deferred<[string, string]> = q.defer();
 
@@ -111,9 +114,18 @@ function processFile(markdownPath: string, templatePath: string, htmlOutDir: str
 
         tl.debug("Reading file " + markdownPath + " succeeded!");
 
-        const md: mdit.MarkdownIt = mdit({
+        const md: MarkdownIt = MarkdownIt({
             html: passThruHTML,
         });
+
+        tl.debug("ReplaceHyperlinks = " + replaceHyperlinks);
+        if (replaceHyperlinks) {
+            md.use(replaceLink, <replaceLink.ReplaceLinkOptions>{
+                replaceLink: (link: string) => {
+                    return link.replace(/.md$/, ".html");
+                },
+            });
+        }
 
         md.use(lazyHeaders);
         md.use(mditAnchor, <mditAnchor.AnchorOptions>{
@@ -213,12 +225,13 @@ function run(): void {
         if (!passThruHTML) {
             passThruHTML = false;
         }
+        const replaceHyperlinks: boolean = tl.getBoolInput("replaceHyperlinksMD2HTML", false);
 
         throwIfDirectory("templatePath", templatePath);
 
         const files = markdownFiles.map((markdownFile) => {
             return processFile(markdownFile, templatePath, htmlOutDir,
-                htmlOutFile, parameters, passThruHTML);
+                htmlOutFile, parameters, passThruHTML, replaceHyperlinks);
         });
 
         Q.all(files).then((results) => {
