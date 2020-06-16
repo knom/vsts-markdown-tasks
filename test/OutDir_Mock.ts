@@ -14,7 +14,7 @@ taskMock.setInput("htmlOutDir", "");
 
 const answers: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     checkPath: {},
-    findMatch: {}
+    findMatch: {},
 };
 answers.findMatch[markdownPathPattern] = [markdownPath];
 answers.checkPath[markdownPath] = true;

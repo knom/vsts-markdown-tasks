@@ -54,7 +54,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();     
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
