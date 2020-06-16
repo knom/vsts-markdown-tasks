@@ -85,7 +85,7 @@ gulp.task('lint', gulp.series(['clean']), function () {
 });
 
 gulp.task('build:markdown2html', function () {
-    var tsProject = typescript.createProject('src/markdown2html/tsconfig.json');
+    var tsProject = typescript.createProject('src/Markdown2Html/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
         .pipe(gulp.dest(function (file) {
@@ -113,7 +113,7 @@ gulp.task('build', gulp.series(['build:markdown2html', 'build:tests', 'lint']), 
 
 
 gulp.task('pre-test', function () {
-    return gulp.src('src/**/markdown2html*.js')
+    return gulp.src('src/**/Markdown2html/*.js')
         .pipe(istanbul({
             includeUntested: true
         }))
