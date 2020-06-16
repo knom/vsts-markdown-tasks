@@ -85,7 +85,7 @@ gulp.task('lint', gulp.series(['clean']), function () {
 });
 
 gulp.task('build:markdown2html', function () {
-    var tsProject = typescript.createProject('src/Markdown2html/tsconfig.json');
+    var tsProject = typescript.createProject('src/Markdown2Html/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
         .pipe(gulp.dest(function (file) {
