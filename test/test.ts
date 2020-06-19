@@ -10,6 +10,8 @@ function readAndNormalize(filePath: string) {
     return normalizeNewline(content.trim());
 }
 
+const taskJsonPath: string = path.join(__dirname, "../src/Markdown2Html/task.json");
+
 // tslint:disable-next-line:no-unused-expression
 // tslint:disable-next-line:only-arrow-functions
 describe("VSTS Markdown Task Tests", function() {
@@ -33,8 +35,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -53,8 +55,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "UTF8-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -71,8 +73,8 @@ describe("VSTS Markdown Task Tests", function() {
     it("Should fail with non-existing Markdown file path", (done: MochaDone) => {
         const taskPath: string = path.join(__dirname, "FailNoExistMdFile_Mock.js");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.failed, "should have failed");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -87,8 +89,8 @@ describe("VSTS Markdown Task Tests", function() {
             "FailInlineHtmlEncoding-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -107,8 +109,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Template-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -126,8 +128,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Parameters-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         // assert.equal(tr.invokedToolCount, 1);
@@ -151,8 +153,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "EncodeInlineHtmlEncoding-expected.html");
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -170,8 +172,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "ReplaceHyperlinks-expected.html");
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -189,8 +191,8 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "Simple-expected.html");
         const actualHtmlPath = path.join(__dirname, "out", "Simple.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath);
-        testRunner.run();
+        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        testRunner.run(12);
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
