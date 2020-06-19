@@ -1,8 +1,8 @@
 import * as assert from "assert";
+import * as ttm from "azure-pipelines-task-lib/mock-test";
 import * as chai from "chai";
 import * as fs from "fs";
 import * as path from "path";
-import * as ttm from "vsts-task-lib/mock-test";
 function readAndNormalize(filePath: string) {
     const content = fs.readFileSync(filePath, "utf8");
 
