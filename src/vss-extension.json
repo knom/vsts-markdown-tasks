@@ -2,7 +2,7 @@
   "manifestVersion": 1,
   "id": "markdown-task",
   "name": "Markdown2Html Build Task",
-  "version": "2.0.1",
+  "version": "0.0.1",
   "publisher": "knom",
   "targets": [{
     "id": "Microsoft.VisualStudio.Services"
@@ -10,7 +10,7 @@
   "description": "A task for converting Markdown to HTML in your build and release pipelines.",
   "public": true,
   "categories": [
-    "Build and release"
+    "Azure Pipelines"
   ],
   "tags": [
     "Markdown",
@@ -36,7 +36,7 @@
   ],
   "content": {
     "details": {
-      "path": "readme.md"
+      "path": "README.md"
     }
   },
   "links": {

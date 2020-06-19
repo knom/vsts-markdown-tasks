@@ -17,7 +17,7 @@ var gulpdebug = require('gulp-debug');
 
 var copyNodeModulesToTasks = function (done) {
     fs.readdirSync('src').forEach(function (file) {
-        var filePath = path.join('dist', 'src', file);
+        var filePath = path.join('dist', file);
         if (fs.statSync(filePath).isDirectory()) {
             try {
                 if (fs.statSync(path.join(filePath, 'task.json')).isFile()) {
