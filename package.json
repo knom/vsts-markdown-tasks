@@ -42,6 +42,7 @@
     "https-proxy-agent": "^3.0.1",
     "merge-stream": "^1.0.1",
     "mocha-junit-reporter": "^1.23.3",
+    "mocha-multi-reporters": "^1.1.7",
     "mock-fs": "^4.12.0",
     "normalize-newline": "^3.0.0",
     "nyc": "^15.1.0",
@@ -53,7 +54,7 @@
   },
   "scripts": {
     "build": "gulp build",
-    "test": "mocha ./test/test.js",
+    "test": "npx mocha ./test/test.js --reporter mocha-multi-reporters --reporter-options configFile=test/mocha-reporters-config.json",
     "test-ci": "istanbul cover './node_modules/mocha/bin/_mocha ./test/test.js' --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage"
   }
 }
