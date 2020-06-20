@@ -36,7 +36,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -56,7 +56,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -74,7 +74,7 @@ describe("VSTS Markdown Task Tests", function() {
         const taskPath: string = path.join(__dirname, "FailNoExistMdFile_Mock.js");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.failed, "should have failed");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -90,7 +90,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -110,7 +110,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -129,7 +129,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         // assert.equal(tr.invokedToolCount, 1);
@@ -154,7 +154,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -173,7 +173,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
         const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
@@ -192,7 +192,7 @@ describe("VSTS Markdown Task Tests", function() {
         const actualHtmlPath = path.join(__dirname, "out", "Simple.html");
 
         const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
-        testRunner.run(12);
+        testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
         chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
