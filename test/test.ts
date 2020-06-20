@@ -1,16 +1,14 @@
 import * as assert from "assert";
-import * as ttm from "azure-pipelines-task-lib/mock-test";
 import * as chai from "chai";
 import * as fs from "fs";
 import * as path from "path";
+import * as ttm from "vsts-task-lib/mock-test";
 function readAndNormalize(filePath: string) {
     const content = fs.readFileSync(filePath, "utf8");
 
     const normalizeNewline = require("normalize-newline");
     return normalizeNewline(content.trim());
 }
-
-const taskJsonPath: string = path.join(__dirname, "../src/Markdown2Html/task.json");
 
 // tslint:disable-next-line:no-unused-expression
 // tslint:disable-next-line:only-arrow-functions
@@ -35,7 +33,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -55,7 +53,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "UTF8-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -73,7 +71,7 @@ describe("VSTS Markdown Task Tests", function() {
     it("Should fail with non-existing Markdown file path", (done: MochaDone) => {
         const taskPath: string = path.join(__dirname, "FailNoExistMdFile_Mock.js");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.failed, "should have failed");
@@ -89,7 +87,7 @@ describe("VSTS Markdown Task Tests", function() {
             "FailInlineHtmlEncoding-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -109,7 +107,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Template-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -128,7 +126,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Parameters-expected.html");
         const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -153,7 +151,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "EncodeInlineHtmlEncoding-expected.html");
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -172,7 +170,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "ReplaceHyperlinks-expected.html");
         const actualHtmlPath = path.join(__dirname, "sample-md-files", "Output.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
@@ -191,7 +189,7 @@ describe("VSTS Markdown Task Tests", function() {
         const expectedHtmlPath = path.join(__dirname, "sample-md-files", "Simple-expected.html");
         const actualHtmlPath = path.join(__dirname, "out", "Simple.html");
 
-        const testRunner = new ttm.MockTestRunner(taskPath, taskJsonPath);
+        const testRunner = new ttm.MockTestRunner(taskPath);
         testRunner.run();
 
         assert(testRunner.succeeded, "should have succeeded");
