@@ -53,3 +53,5 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+junit-test-report.xml
+test/sample-md-files/Simple.html

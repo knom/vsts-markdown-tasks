@@ -201,10 +201,13 @@ function run(): void {
                 .map((value) => value.trim());
 
             htmlOutDir = tl.getPathInput("htmlOutDir", false);
-            throwIfNotDirectory("htmlOutDir", htmlOutDir);
 
-            if (!fs.existsSync(htmlOutDir)) {
-                fs.mkdirSync(htmlOutDir);
+            if (htmlOutDir != null && htmlOutDir !== "") {
+                throwIfNotDirectory("htmlOutDir", htmlOutDir);
+
+                if (!fs.existsSync(htmlOutDir)) {
+                    fs.mkdirSync(htmlOutDir);
+                }
             }
 
             const matches = tl.findMatch("", markdownSearchPatterns);

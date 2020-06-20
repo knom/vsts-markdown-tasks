@@ -96,15 +96,15 @@ gulp.task('build:markdown2html', gulp.parallel('lint:markdown2html', function ()
     var tsProject = typescript.createProject('src/Markdown2Html/tsconfig.json');
     return tsProject.src()
         .pipe(tsProject())
-        .pipe(gulpdebug({title:"SRC"}))
+        .pipe(gulpdebug({ title: "SRC" }))
         .pipe(gulp.dest(function (file) {
-            return "./dist/" + path.relative(path.join(file.cwd,"src/"), file.base);
+            return "./dist/" + path.relative(path.join(file.cwd, "src/"), file.base);
         }))
-        .pipe(gulpdebug({title:"DST1"}))
+        .pipe(gulpdebug({ title: "DST1" }))
         .pipe(gulp.dest(function (file) {
             return file.base;
         }))
-        .pipe(gulpdebug({title:"DST2"}));
+        .pipe(gulpdebug({ title: "DST2" }));
 }));
 
 gulp.task('build:tests', gulp.parallel('lint:tests', function () {
@@ -114,7 +114,7 @@ gulp.task('build:tests', gulp.parallel('lint:tests', function () {
         .pipe(gulp.dest(function (file) {
             return file.base;
         }))
-        .pipe(gulpdebug({title:"DST"}));
+        .pipe(gulpdebug({ title: "DST" }));
 }));
 
 
@@ -122,9 +122,9 @@ gulp.task('build', gulp.series('build:markdown2html', 'build:tests', function ()
     return gulp.src('src/**/*', '!**/*.[t]s', {
         base: './src/'
     })
-    .pipe(gulpdebug({title:"SRC"}))
-    .pipe(gulp.dest('dist'))
-    .pipe(gulpdebug({title:"DST"}))
+        .pipe(gulpdebug({ title: "SRC" }))
+        .pipe(gulp.dest('dist'))
+        .pipe(gulpdebug({ title: "DST" }))
 }));
 
 
@@ -140,8 +140,10 @@ gulp.task('mocha-test', //gulp.series(['build', 'pre-test']),
     function () { //'pre-test',
         return gulp.src('test/**/test.js')
             .pipe(mocha({
-                reporter: 'mocha-junit-reporter' 
-                // reporter: 'spec'
+                reporter: "mocha-multi-reporters",
+                reporterOptions: {
+                    configFile: "test/mocha-reporters-config.json"
+                }
             }));
         // .pipe(istanbul.writeReports());
     });

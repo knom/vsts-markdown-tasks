@@ -48,6 +48,26 @@ describe("VSTS Markdown Task Tests", function() {
         done();
     });
 
+    it("Should succeed with EMPTY OUT DIR but use SOURCE folder", (done: MochaDone) => {
+        const taskPath: string = path.join(__dirname, "OutDir_Mock.js");
+        const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple-expected.html");
+        const actualHtmlPath: string = path.join(__dirname, "sample-md-files", "Simple.html");
+
+        const testRunner: ttm.MockTestRunner = new ttm.MockTestRunner(taskPath);
+        testRunner.run();
+
+        assert(testRunner.succeeded, "should have succeeded");
+        chai.expect(testRunner.warningIssues.length).to.equal(0, "should have no warnings");
+        assert.equal(testRunner.errorIssues.length, 0, "should have no errors");
+
+        const html: string = readAndNormalize(actualHtmlPath);
+        const markdown: string = readAndNormalize(expectedHtmlPath);
+
+        chai.expect(html).to.equal(markdown, "should have valid HTML as output!");
+
+        done();
+    });
+
     it("Should succeed with simple UTF8 inputs", (done: MochaDone) => {
         const taskPath: string = path.join(__dirname, "UTF8_Mock.js");
         const expectedHtmlPath: string = path.join(__dirname, "sample-md-files", "UTF8-expected.html");
