@@ -19,7 +19,7 @@
     "markdown-it-lazy-headers": "^0.1.3",
     "markdown-it-replace-link": "^1.1.0",
     "q": "^1.5.1",
-    "azure-pipelines-task-lib": "^2.9.5"
+    "azure-pipelines-task-lib": "^2.9.2"
   },
   "devDependencies": {
     "@types/gulp-istanbul": "^0.9.32",
