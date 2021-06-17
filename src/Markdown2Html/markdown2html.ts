@@ -24,6 +24,8 @@
 // $env:ENDPOINT_DATA_EP1 = '{ "Key1": "Value1", "Key2", "Value2" }'
 // $env:INPUT_appManifestXmlPath="C:\...\a.xml"
 
+import tl = require("azure-pipelines-task-lib/task");
+import trm = require("azure-pipelines-task-lib/toolrunner");
 import dust = require("dustjs-linkedin");
 import fs = require("fs");
 import MarkdownIt = require("markdown-it");
@@ -35,8 +37,6 @@ import path = require("path");
 import q = require("q");
 import Q = require("q");
 import util = require("util");
-import tl = require("vsts-task-lib/task");
-import trm = require("vsts-task-lib/toolrunner");
 
 function transformTemplate(templatePath: string, templateObject: any): q.Promise<any> {
     const deferred: q.Deferred<any> = q.defer();

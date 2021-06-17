@@ -1,6 +1,6 @@
+import ma = require("azure-pipelines-task-lib/mock-answer");
+import tmrm = require("azure-pipelines-task-lib/mock-run");
 import path = require("path");
-import ma = require("vsts-task-lib/mock-answer");
-import tmrm = require("vsts-task-lib/mock-run");
 
 const taskPath: string = path.join(__dirname, "..", "dist", "Markdown2Html", "markdown2html.js");
 const markdownPathPattern: string = path.join(__dirname, "sample-md-files", "Simple*.md");

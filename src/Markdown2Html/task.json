@@ -116,7 +116,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "node10": {
       "target": "markdown2html.js",
       "argumentFormat": ""
     }
